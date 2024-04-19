@@ -1,41 +1,18 @@
 package application;
 	
 import javafx.application.Application;
-import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
-import application.database.DatabaseConnection;
+import javafx.stage.Stage;
 
 public class Main extends Application {
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage stage) {
 		try {
-			BorderPane root = new BorderPane();
-			Scene scene = new Scene(root, 400, 400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show();
-			
-			// Connection test
-			Connection connection = DatabaseConnection.getDatabaseConnection();
-			if (connection != null) {
-			   System.out.println("Connection established\n");
-			   
-			   Statement statement = connection.createStatement();
-			   
-			   System.out.println("AuthenticationSystem Data:");
-			   ResultSet resultSet = statement.executeQuery("select * from AuthenticationSystem;");
-			   while (resultSet.next())
-			      System.out.println(resultSet.getString(1) + " " + resultSet.getString(2));
-			   
-			   connection.close();
-			   System.out.println("\nConnection closed");
-			}
+		   Scene scene = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml")));
+		   stage.setTitle("HotelManagementSystem");
+		   stage.setScene(scene);
+		   stage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
