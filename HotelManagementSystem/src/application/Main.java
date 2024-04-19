@@ -9,6 +9,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		try {
+         // Load window
 		   Scene scene = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml")));
 		   stage.setTitle("HotelManagementSystem");
 		   stage.setScene(scene);
