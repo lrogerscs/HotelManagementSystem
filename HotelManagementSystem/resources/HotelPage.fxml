@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.ViewTicketController">
+   <children>
+      <Label layoutX="14.0" layoutY="32.0" prefHeight="16.0" prefWidth="139.0" text="Ticket Name:" />
+      <Label layoutX="16.0" layoutY="174.0" prefHeight="17.0" prefWidth="114.0" text="New Comment">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="CommentTimeStamp" editable="false" layoutX="16.0" layoutY="200.0" visible="false" />
+      <TextArea fx:id="CommentDescriptionField" layoutX="14.0" layoutY="225.0" prefHeight="122.0" prefWidth="250.0" promptText="Type here" visible="false" />
+      <Button fx:id="saveButton" layoutX="144.0" layoutY="312.0" mnemonicParsing="false" onAction="#saveCommentOp" prefHeight="25.0" prefWidth="41.0" text="Save" visible="false" />
+      <Button fx:id="clearButton" layoutX="190.0" layoutY="312.0" mnemonicParsing="false" onAction="#clearAllOp" prefHeight="25.0" prefWidth="51.0" text="Clear" visible="false" />
+      <Label fx:id="ProjectName" alignment="CENTER" layoutX="142.0" layoutY="-3.0" prefHeight="27.0" prefWidth="311.0" text="BugTrak" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="400.0" layoutY="74.0" text="Comments">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="382.0" layoutY="200.0" text="Comment Details">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="CommentDetails" layoutX="298.0" layoutY="225.0" prefHeight="122.0" prefWidth="290.0" promptText="Select a comment to view" />
+      <Button fx:id="editButton" layoutX="481.0" layoutY="312.0" mnemonicParsing="false" onAction="#editCommentOp" text="Edit" />
+      <Button fx:id="deleteButton" layoutX="528.0" layoutY="312.0" mnemonicParsing="false" onAction="#deleteCommentOp" text="Delete" />
+      <ComboBox fx:id="TicketList" layoutX="15.0" layoutY="49.0" prefWidth="150.0" promptText="Select a Ticket" />
+      <Button fx:id="backButton" layoutX="528.0" layoutY="374.0" mnemonicParsing="false" onAction="#backButtonOp" text="Back" />
+      <TextFlow fx:id="TicketDescription" layoutX="14.0" layoutY="80.0" prefHeight="83.0" prefWidth="209.0" textAlignment="CENTER" />
+      <TableView fx:id="CommentInfo" layoutX="297.0" layoutY="103.0" prefHeight="83.0" prefWidth="290.0">
+        <columns>
+          <TableColumn fx:id="Comments" editable="false" prefWidth="160.0" text="Comments" />
+          <TableColumn fx:id="TimeStamp" editable="false" prefWidth="129.0" text="Time Stamp" />
+        </columns>
+      </TableView>
+      <Button fx:id="newCommentButton" layoutX="127.0" layoutY="174.0" mnemonicParsing="false" onAction="#newCommentOp" text="+" />
+   </children>
+</AnchorPane>
