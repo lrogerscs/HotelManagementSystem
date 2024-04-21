@@ -36,7 +36,7 @@ public class LoginController implements Initializable {
 	@FXML
 	Button loginButton;
 	
-	private String dburl;
+	private String dbUrl;
 	private String dbUser;
 	private String dbPassword;
 	
@@ -51,7 +51,7 @@ public class LoginController implements Initializable {
 	      System.out.println("Successful login");
          
          try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("hotel_page.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("hotel.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -69,7 +69,7 @@ public class LoginController implements Initializable {
 	   
 	   // Check if login exists in table
 	   try {
-	      Connection connection = DatabaseConnection.getDatabaseConnection(dburl, dbUser, dbPassword);
+	      Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
 	      
 	      if (connection != null) {
 	         Statement statement = connection.createStatement();
@@ -94,7 +94,7 @@ public class LoginController implements Initializable {
          Properties properties = new Properties();
          properties.load(new FileInputStream(new File("resources/credentials.properties")));
          
-         dburl = properties.getProperty("url");
+         dbUrl = properties.getProperty("url");
          dbUser = properties.getProperty("user");
          dbPassword = properties.getProperty("password");
       } catch (IOException e) {

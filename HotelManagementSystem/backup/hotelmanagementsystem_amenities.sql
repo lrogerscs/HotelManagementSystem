@@ -18,27 +18,26 @@ USE `hotelmanagementsystem`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `authenticationsystem`
+-- Table structure for table `amenities`
 --
 
-DROP TABLE IF EXISTS `authenticationsystem`;
+DROP TABLE IF EXISTS `amenities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `authenticationsystem` (
-  `LoginID` varchar(255) NOT NULL,
-  `Password` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`LoginID`)
+CREATE TABLE `amenities` (
+  `HotelID` int DEFAULT NULL,
+  `Amenity` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `authenticationsystem`
+-- Dumping data for table `amenities`
 --
 
-LOCK TABLES `authenticationsystem` WRITE;
-/*!40000 ALTER TABLE `authenticationsystem` DISABLE KEYS */;
-INSERT INTO `authenticationsystem` VALUES ('Admin','default'),('Emp1','123');
-/*!40000 ALTER TABLE `authenticationsystem` ENABLE KEYS */;
+LOCK TABLES `amenities` WRITE;
+/*!40000 ALTER TABLE `amenities` DISABLE KEYS */;
+INSERT INTO `amenities` VALUES (1,'Spa'),(2,'Pool');
+/*!40000 ALTER TABLE `amenities` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
