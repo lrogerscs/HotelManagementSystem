@@ -51,7 +51,7 @@ public class LoginController implements Initializable {
 	      System.out.println("Successful login");
          
          try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("hotel.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -92,7 +92,7 @@ public class LoginController implements Initializable {
       try {
          // Retrieve DB credentials
          Properties properties = new Properties();
-         properties.load(new FileInputStream(new File("resources/credentials.properties")));
+         properties.load(new FileInputStream(new File("resources/credentials/credentials.properties")));
          
          dbUrl = properties.getProperty("url");
          dbUser = properties.getProperty("user");

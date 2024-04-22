@@ -1,0 +1,44 @@
+@font-face {
+   -fx-font-family: "Red Hat Display";
+   src: url("../font/RedHatDisplay-VariableFont_wght.ttf");
+}
+
+.base-pane {
+   -fx-background-color: #ffffff;
+   -fx-pref-width: 1600;
+   -fx-pref-height: 900;
+}
+
+.banner-pane {
+   -fx-background-image: url("../image/AdobeStock_257989024.jpeg");
+   -fx-background-repeat: stretch;
+   -fx-background-size: 1600 600;
+   -fx-background-position: center bottom;
+}
+
+.text-pane {
+   -fx-alignment: center-left;
+   -fx-font-size: 30;
+   -fx-spacing: 10;
+   -fx-padding: 20;
+   -fx-pref-width: 1600;
+   -fx-pref-height: 50;
+}
+
+.display-pane {
+   -fx-alignment: top-left;
+   -fx-font-size: 12;
+   -fx-padding: 20;
+}
+
+.object-pane {
+   -fx-max-width: 300;
+   -fx-max-height: 150;
+   -fx-background-color: #ffffff;
+   -fx-background-radius: 10;
+   -fx-border-color: #000000;
+   -fx-border-radius: 10;
+   -fx-border-width: 2;
+   -fx-alignment: center;
+   -fx-padding: 20;
+}

@@ -10,7 +10,7 @@ public class Main extends Application {
    public void start(Stage stage) {
       try {
          // Load window
-         Scene scene = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml")));
+         Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/login.fxml")));
          stage.setTitle("HotelManagementSystem");
          stage.setScene(scene);
          stage.show();
