@@ -15,11 +15,11 @@ import application.hotel.Hotel;
 import application.pane.HotelPane;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 
 public class HomeController implements Initializable {
    @FXML
-   private VBox hotelPanelPane;
+   private HBox hotelPanelPane;
    
    private String dbUrl;
    private String dbUser;

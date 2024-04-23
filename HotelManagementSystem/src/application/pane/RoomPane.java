@@ -1,7 +1,5 @@
 package application.pane;
 
-import java.text.DateFormat;
-
 import application.room.Room;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -12,10 +10,10 @@ public class RoomPane extends VBox {
    
    public RoomPane(Room room) {
       this.room = room;
-      roomId = new Label(Integer.toString(room.getRoomId()));
-      customerId = new Label(Integer.toString(room.getCustomerId()));
-      price = new Label(Double.toString(room.getPrice()));
-      date = new Label(room.getDate().toString());
+      roomId = new Label("Room Number: " + Integer.toString(this.room.getRoomId()));
+      customerId = new Label("Customer Number: " + Integer.toString(this.room.getCustomerId()));
+      price = new Label("Price: " + Double.toString(this.room.getPrice()));
+      date = new Label("Check-In Date: " + this.room.getDate().toString());
       
       getChildren().addAll(roomId, customerId, price, date);
       getStyleClass().add("object-pane");

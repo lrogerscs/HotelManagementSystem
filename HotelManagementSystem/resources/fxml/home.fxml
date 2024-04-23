@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" styleClass="base-pane" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.HomeController">
@@ -8,9 +9,14 @@
       <VBox prefHeight="150.0" prefWidth="1600.0" styleClass="banner-pane" />
       <VBox prefHeight="100.0" prefWidth="1600.0" styleClass="text-pane">
          <children>
-            <Label style="-fx-font-size: 50;" text="Hotels" />
+            <Label text="Account Info" />
          </children>
       </VBox>
-      <VBox fx:id="hotelPanelPane" prefHeight="600.0" prefWidth="1600.0" spacing="10.0" styleClass="display-pane" />
+      <VBox prefHeight="100.0" prefWidth="1600.0" styleClass="text-pane">
+         <children>
+            <Label text="Hotels" />
+         </children>
+      </VBox>
+      <HBox fx:id="hotelPanelPane" prefHeight="590.0" prefWidth="1600.0" styleClass="display-pane" />
    </children>
 </VBox>

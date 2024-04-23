@@ -14,21 +14,29 @@ import javafx.stage.Stage;
 
 public class HotelPane extends VBox {
    private Hotel hotel;
-   private Label name, phoneNumber, streetAddress, city, country;
+   private Label name, address, phoneNumber, streetAddress, city, country;
    private Button select;
+   private VBox titlePane, descPane, buttonPane;
    
    public HotelPane(Hotel hotel) {
       this.hotel = hotel;
       name = new Label(this.hotel.getName());
-      phoneNumber = new Label(this.hotel.getPhoneNumber());
-      streetAddress = new Label(this.hotel.getStreetAddress());
-      city = new Label(this.hotel.getCity());
-      country = new Label(this.hotel.getCountry());
+      address = new Label("Location: " + this.hotel.getStreetAddress() + ", " + this.hotel.getCity() + ", " + this.hotel.getCountry());
+      phoneNumber = new Label("Phone: " + this.hotel.getPhoneNumber());
       select = new Button("Select");
+      titlePane = new VBox();
+      descPane = new VBox();
+      buttonPane = new VBox();
       
       select.setOnAction(event -> loadHotel(event));
       
-      getChildren().addAll(name, phoneNumber, streetAddress, city, country, select);
+      titlePane.getChildren().add(name);
+      descPane.getChildren().addAll(address, phoneNumber, select);
+      buttonPane.getChildren().add(select);
+      getChildren().addAll(titlePane, descPane, buttonPane);
+      
+      titlePane.getStyleClass().add("title-pane");
+      descPane.getStyleClass().add("desc-pane");
       getStyleClass().add("object-pane");
    }
    
