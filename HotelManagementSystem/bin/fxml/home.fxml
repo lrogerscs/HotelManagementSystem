@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" styleClass="base-pane" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.HomeController">
+
+	<!-- Banner -->
+	<VBox prefHeight="150.0" prefWidth="1600.0" styleClass="banner-pane" />
+
+	<!-- Account Info Section -->
+	<VBox prefHeight="200.0" prefWidth="1600.0" styleClass="text-pane">
+		<children>
+			<Label styleClass="section-label" text="Account Information" />
+			<HBox prefHeight="69.0" prefWidth="1560.0" spacing="20">
+				<VBox prefHeight="92.0" prefWidth="532.0">
+					<Label prefHeight="32.0" prefWidth="537.0" text="Name:" fx:id="nameLabel"/>
+   					<Label prefHeight="52.0" prefWidth="68.0" text="Email:" fx:id="emailLabel"/>
+				</VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+      					<Label text="Title:" fx:id="titleLabel"/>
+      					<Label text="Phone:" fx:id="phoneLabel"/>
+               </children>
+            </VBox>
+			</HBox>
+		</children>
+	</VBox>
+
+	<!-- Hotels Section -->
+	<VBox prefHeight="100.0" prefWidth="1600.0" styleClass="text-pane">
+		<children>
+			<Label styleClass="section-label" text="Hotels" />
+		</children>
+	</VBox>
+
+	<!-- Hotel Panels -->
+	<HBox fx:id="hotelPanelPane" prefHeight="590.0" prefWidth="1600.0" styleClass="display-pane" />
+
+</VBox>

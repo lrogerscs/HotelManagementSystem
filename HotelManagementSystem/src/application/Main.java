@@ -6,20 +6,20 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-	@Override
-	public void start(Stage stage) {
-		try {
+   @Override
+   public void start(Stage stage) {
+      try {
          // Load window
-		   Scene scene = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml")));
-		   stage.setTitle("HotelManagementSystem");
-		   stage.setScene(scene);
-		   stage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void main(String[] args) {
-		launch(args);
-	}
+         Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/login.fxml")));
+         stage.setTitle("HotelManagementSystem");
+         stage.setScene(scene);
+         stage.show();
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+   }
+
+   public static void main(String[] args) {
+      launch(args);
+   }
 }
