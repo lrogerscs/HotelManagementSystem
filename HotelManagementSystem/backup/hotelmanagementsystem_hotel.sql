@@ -42,6 +42,16 @@ CREATE TABLE `hotel` (
 LOCK TABLES `hotel` WRITE;
 /*!40000 ALTER TABLE `hotel` DISABLE KEYS */;
 INSERT INTO `hotel` VALUES (1,'The Grand','123-123','123 Street','Glasgow','Scotland'),(2,'Extra','1234-1234','123 Avenue','London','England');
+INSERT INTO `hotel` VALUES
+(3, 'Luxury Haven', '555-5555', '456 Boulevard', 'New York', 'USA'),
+(4, 'Royal Retreat', '777-7777', '789 Road', 'Paris', 'France'),
+(5, 'Golden Palace', '999-9999', '101 Avenue', 'Tokyo', 'Japan'),
+(6, 'Majestic Mansion', '111-1111', '303 Street', 'Sydney', 'Australia'),
+(7, 'Emerald Oasis', '222-2222', '404 Lane', 'Dubai', 'UAE'),
+(8, 'Serene Sanctuary', '333-3333', '505 Court', 'Rome', 'Italy'),
+(9, 'Paradise Plaza', '444-4444', '606 Drive', 'Rio de Janeiro', 'Brazil'),
+(10, 'Tranquil Tower', '666-6666', '707 Park', 'Seoul', 'South Korea');
+
 /*!40000 ALTER TABLE `hotel` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

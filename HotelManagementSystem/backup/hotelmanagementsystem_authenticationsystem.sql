@@ -38,6 +38,17 @@ CREATE TABLE `authenticationsystem` (
 LOCK TABLES `authenticationsystem` WRITE;
 /*!40000 ALTER TABLE `authenticationsystem` DISABLE KEYS */;
 INSERT INTO `authenticationsystem` VALUES ('Admin','default'),('Emp1','123');
+INSERT INTO `authenticationsystem` VALUES
+('Employee2', 'password2'),
+('Employee3', 'password3'),
+('Employee4', 'password4'),
+('Employee5', 'password5'),
+('Employee6', 'password6'),
+('Employee7', 'password7'),
+('Employee8', 'password8'),
+('Employee9', 'password9'),
+('Employee10', 'password10');
+
 /*!40000 ALTER TABLE `authenticationsystem` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
