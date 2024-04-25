@@ -42,14 +42,10 @@ public class LoginController implements Initializable {
 	
 	@FXML
 	private void onLoginButtonClick(ActionEvent event) {
-	   if (userField.getText() == null || userField.getText().isEmpty() || passwordField.getText() == null || passwordField.getText().isEmpty()) {
-	      System.out.println("Login empty");
+	   if (userField.getText() == null || userField.getText().isEmpty() || passwordField.getText() == null || passwordField.getText().isEmpty())
 	      return;
-	   }
 	   
 	   if (isValidLogin(userField.getText(), passwordField.getText())) {
-	      System.out.println("Successful login");
-         
          try {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
             Scene scene = new Scene(root);
@@ -60,8 +56,6 @@ public class LoginController implements Initializable {
             e.printStackTrace();
          }
 	   }
-	   else
-	      System.out.println("Incorrect login");
 	}
 	
 	private boolean isValidLogin(String loginUser, String loginPassword) {
@@ -70,16 +64,12 @@ public class LoginController implements Initializable {
 	   // Check if login exists in table
 	   try {
 	      Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
-	      
-	      if (connection != null) {
-	         Statement statement = connection.createStatement();
-	         ResultSet resultSet = statement.executeQuery("select LoginID, Password from AuthenticationSystem "
-	               + "where LoginID = '" + loginUser + "' and Password = '" + loginPassword + "'");
-	         
-	         if (resultSet.isBeforeFirst())
-	            valid = true;
-	      } else
-	         System.out.println("Connection error");
+	      Statement statement = connection.createStatement();
+         ResultSet resultSet = statement.executeQuery("select LoginID, Password from AuthenticationSystem "
+               + "where LoginID = '" + loginUser + "' and Password = '" + loginPassword + "'");
+         
+         if (resultSet.isBeforeFirst())
+            valid = true;
 	   } catch (Exception e) {
 	      e.printStackTrace();
 	   }

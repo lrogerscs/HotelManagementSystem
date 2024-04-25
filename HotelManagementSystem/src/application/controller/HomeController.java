@@ -13,17 +13,39 @@ import java.util.ResourceBundle;
 import application.database.DatabaseConnection;
 import application.hotel.Hotel;
 import application.pane.HotelPane;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.HBox;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class HomeController implements Initializable {
    @FXML
-   private HBox hotelPanelPane;
+   private VBox employeePanelPane;
+   
+   @FXML
+   private VBox hotelPanelPane;
    
    private String dbUrl;
    private String dbUser;
    private String dbPassword;
+   
+   @FXML
+   private void onAddHotelButtonClick(ActionEvent event) {
+      try {
+         Parent root = FXMLLoader.load(getClass().getResource("/fxml/add_hotel.fxml"));
+         Scene scene = new Scene(root);
+         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+         stage.setScene(scene);
+         stage.show();
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+   }
    
    @Override
    public void initialize(URL location, ResourceBundle resources) {

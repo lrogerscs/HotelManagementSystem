@@ -62,7 +62,6 @@ public class HotelController implements Initializable {
          Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
          Statement statement = connection.createStatement();
          
-         
          // Find amenities
          ResultSet resultSet = statement.executeQuery("select * from Amenities where HotelID = " + this.hotel.getHotelId());
          while (resultSet.next())
@@ -84,6 +83,8 @@ public class HotelController implements Initializable {
             amenitiesPanelPane.getChildren().add(new Label(amenity));
          for (Room room : rooms)
             roomPanelPane.getChildren().add(new RoomPane(room));
+         
+         connection.close();
       } catch (SQLException e) {
          e.printStackTrace();
       }

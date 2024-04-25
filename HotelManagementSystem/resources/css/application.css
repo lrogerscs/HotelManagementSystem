@@ -1,5 +1,5 @@
 @font-face {
-   -fx-font-family: "Red Hat Display";
+   font-family: "Red Hat Display";
    src: url("../font/RedHatDisplay-VariableFont_wght.ttf");
 }
 
@@ -10,12 +10,15 @@
 }
 
 .banner-pane {
+   -fx-font-family: "Red Hat Display";
+   -fx-font-size: 32;
    -fx-background-image: url("../image/AdobeStock_257989024.jpeg");
    -fx-background-repeat: stretch;
    -fx-background-size: 1600 600;
    -fx-background-position: center bottom;
-   -fx-alignment: center;
+   -fx-alignment: bottom-left;
    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0.3, 0, 0);
+   -fx-padding: 20;
 }
 
 .text-pane {
@@ -50,6 +53,7 @@
 .bottom-pane {
    -fx-pref-height: 50;
    -fx-padding: 10 20 10 20;
+   -fx-spacing: 10;
    -fx-alignment: center-left;
 }
 
@@ -64,14 +68,71 @@
    -fx-spacing: 5;
 }
 
+.prompt-pane {
+   -fx-font-size: 16;
+   -fx-alignment: center-left;
+   -fx-spacing: 10;
+}
+
+.button-pane {
+   -fx-spacing: 10;
+}
+
+.label {
+   -fx-font-family: "Red Hat Display";
+}
+
+.text-field {
+   -fx-font-family: "Red Hat Display";
+   -fx-font-size: 14;
+   -fx-text-fill: #696969;
+   -fx-prompt-text-fill: #696969;
+   -fx-border-color: #696969;
+   -fx-border-radius: 5;
+   -fx-border-width: 1.5;
+   -fx-background-color: #ffffff;
+   -fx-background-radius: 5;
+   -fx-pref-width: 225;
+}
+
 .button {
    -fx-font-size: 12;
    -fx-background-color: #696969;
    -fx-background-radius: 5;
-   -fx-padding: 10;
+   -fx-padding: 7;
    -fx-text-fill: #ffffff;
 }
 
 .button:pressed {
    -fx-background-color: #3d3d3d;
+}
+
+.scroll-pane {
+   -fx-background-insets: 0;
+   -fx-padding: 0;
+   -fx-background-color: #ffffff;
+}
+
+.scroll-pane .viewport {
+   -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical {
+   -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .thumb {
+   -fx-background-color: #808080;
+}
+
+.scroll-bar:vertical .thumb:pressed {
+   -fx-background-color: #373737;
+}
+
+.scroll-bar:vertical .increment-button .increment-arrow {
+   -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .decrement-button .decrement-arrow {
+   -fx-background-color: transparent;
 }

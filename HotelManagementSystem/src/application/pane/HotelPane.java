@@ -9,14 +9,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class HotelPane extends VBox {
    private Hotel hotel;
-   private Label name, address, phoneNumber, streetAddress, city, country;
-   private Button select;
-   private VBox titlePane, descPane, buttonPane;
+   private Label name, address, phoneNumber;
+   private Button select, update;
+   private VBox titlePane, descPane;
+   private HBox buttonPane;
    
    public HotelPane(Hotel hotel) {
       this.hotel = hotel;
@@ -24,19 +26,21 @@ public class HotelPane extends VBox {
       address = new Label("Location: " + this.hotel.getStreetAddress() + ", " + this.hotel.getCity() + ", " + this.hotel.getCountry());
       phoneNumber = new Label("Phone: " + this.hotel.getPhoneNumber());
       select = new Button("Select");
+      update = new Button("Update");
       titlePane = new VBox();
       descPane = new VBox();
-      buttonPane = new VBox();
+      buttonPane = new HBox();
       
       select.setOnAction(event -> loadHotel(event));
       
       titlePane.getChildren().add(name);
       descPane.getChildren().addAll(address, phoneNumber, select);
-      buttonPane.getChildren().add(select);
+      buttonPane.getChildren().addAll(select, update);
       getChildren().addAll(titlePane, descPane, buttonPane);
       
       titlePane.getStyleClass().add("title-pane");
       descPane.getStyleClass().add("desc-pane");
+      buttonPane.getStyleClass().add("button-pane");
       getStyleClass().add("object-pane");
    }
    
