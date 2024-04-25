@@ -37,6 +37,26 @@ CREATE TABLE `amenities` (
 LOCK TABLES `amenities` WRITE;
 /*!40000 ALTER TABLE `amenities` DISABLE KEYS */;
 INSERT INTO `amenities` VALUES (1,'Spa'),(2,'Pool');
+INSERT INTO `amenities` (`HotelID`, `Amenity`) VALUES
+(1, 'Gym'),
+(2, 'Restaurant'),
+(3, 'Conference Room'),
+(3, 'Spa'),
+(4, 'Fitness Center'),
+(4, 'Bar'),
+(5, 'Business Center'),
+(5, 'Lounge'),
+(6, 'Free Wi-Fi'),
+(6, 'Room Service'),
+(7, 'Laundry Service'),
+(7, 'Parking'),
+(8, 'Jacuzzi'),
+(8, 'Airport Shuttle'),
+(9, 'Garden'),
+(9, 'Terrace'),
+(10, 'Pet-friendly'),
+(10, 'Beach Access');
+
 /*!40000 ALTER TABLE `amenities` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
