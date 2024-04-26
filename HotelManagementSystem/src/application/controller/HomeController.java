@@ -20,12 +20,23 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class HomeController implements Initializable {
    @FXML
    private VBox employeePanelPane;
+
+   @FXML
+   private Label employeeNameLabel;
+
+   @FXML
+   private Label employeeTitleLabel;
+
+   @FXML
+   private Label employeeEmailLabel;
+
    
    @FXML
    private VBox hotelPanelPane;
@@ -50,6 +61,7 @@ public class HomeController implements Initializable {
    @Override
    public void initialize(URL location, ResourceBundle resources) {
       try {
+    	  
          ArrayList<Hotel> hotels = new ArrayList<Hotel>();
          
          // Retrieve DB credentials
