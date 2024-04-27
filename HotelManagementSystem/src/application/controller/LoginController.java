@@ -28,17 +28,17 @@ import javafx.scene.control.TextField;
 
 public class LoginController implements Initializable {
 	@FXML
-	BorderPane HomePane;
+	private BorderPane HomePane;
 	
 	@FXML
-	TextField userField;
+	private TextField userField;
 	
 	
 	@FXML
-	Button loginButton;
+	private Button loginButton;
 	
 	@FXML
-    private CheckBox showPasswordCheckbox;
+   private CheckBox showPasswordCheckbox;
 	
 	@FXML
 	private PasswordField passwordField;
@@ -46,7 +46,6 @@ public class LoginController implements Initializable {
 	private String dbUrl;
 	private String dbUser;
 	private String dbPassword;
-	
 	
 	@FXML
 	private void onLoginButtonClick(ActionEvent event) {
@@ -90,8 +89,6 @@ public class LoginController implements Initializable {
 	   return valid;
 	}
 	
-
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	    try {
@@ -112,9 +109,6 @@ public class LoginController implements Initializable {
 	        dbUrl = properties.getProperty("url");
 	        dbUser = properties.getProperty("user");
 	        dbPassword = properties.getProperty("password"); // Store the actual password
-
-
-
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }

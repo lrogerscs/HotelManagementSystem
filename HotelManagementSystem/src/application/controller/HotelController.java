@@ -48,7 +48,7 @@ public class HotelController implements Initializable {
          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          stage.setScene(scene);
          stage.show();
-      } catch (Exception e) {
+      } catch (IOException e) {
          e.printStackTrace();
       }
    }

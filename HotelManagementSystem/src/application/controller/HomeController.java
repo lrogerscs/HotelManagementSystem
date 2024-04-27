@@ -2,9 +2,11 @@ package application.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -61,7 +63,6 @@ public class HomeController implements Initializable {
    @Override
    public void initialize(URL location, ResourceBundle resources) {
       try {
-    	  
          ArrayList<Hotel> hotels = new ArrayList<Hotel>();
          
          // Retrieve DB credentials
@@ -93,7 +94,9 @@ public class HomeController implements Initializable {
             hotelPanelPane.getChildren().add(new HotelPane(hotel));
          
          connection.close();
-      } catch (Exception e) {
+      } catch (IOException e) {
+         e.printStackTrace();
+      } catch (SQLException e) {
          e.printStackTrace();
       }
    }

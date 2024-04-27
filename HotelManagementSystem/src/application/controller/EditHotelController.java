@@ -5,12 +5,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
 import application.database.DatabaseConnection;
+import application.hotel.Hotel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class AddHotelController implements Initializable {
+public class EditHotelController implements Initializable {
    @FXML
    private TextField hotelId;
    
@@ -43,6 +43,7 @@ public class AddHotelController implements Initializable {
    private String dbUrl;
    private String dbUser;
    private String dbPassword;
+   private Hotel hotel;
    
    @FXML
    private void onSaveButtonClick(ActionEvent event) {
@@ -57,9 +58,15 @@ public class AddHotelController implements Initializable {
       try {
          Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
          Statement statement = connection.createStatement();
-         statement.executeUpdate("insert into Hotel(HotelID, Name, PhoneNumber, StreetAddress, City, Country)"
-               + " values (" + hotelId.getText() + ", '" + name.getText() + "', '" + phoneNumber.getText() + "', '"
-               + streetAddress.getText() + "', '" + city.getText() + "', '" + country.getText() + "')");
+         statement.executeUpdate("update Hotel set HotelID = " + hotelId.getText() 
+               + ", Name = '" + name.getText() + "', PhoneNumber = '" + phoneNumber.getText() 
+               + "', City = '" + city.getText() + "', Country = '" + country.getText() 
+               + "' where HotelID = " + hotel.getHotelId());
+         statement.executeUpdate("update Amenities set HotelID = " + hotelId.getText() 
+               + " where HotelId = " + hotel.getHotelId());
+         statement.executeUpdate("update Room set HotelID = " + hotelId.getText() 
+               + " where HotelID = " + hotel.getHotelId());
+         // Add query to update employees
          connection.close();
          
          Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
@@ -67,9 +74,7 @@ public class AddHotelController implements Initializable {
          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          stage.setScene(scene);
          stage.show();
-      } catch (IOException e) {
-         e.printStackTrace();
-      } catch (SQLException e) {
+      } catch (Exception e) {
          e.printStackTrace();
       }
    }
@@ -82,9 +87,19 @@ public class AddHotelController implements Initializable {
          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          stage.setScene(scene);
          stage.show();
-      } catch (IOException e) {
+      } catch (Exception e) {
          e.printStackTrace();
       }
+   }
+   
+   public void setHotel(Hotel hotel) {
+      this.hotel = hotel;
+      hotelId.setText(Integer.toString(this.hotel.getHotelId()));
+      name.setText(this.hotel.getName());
+      phoneNumber.setText(this.hotel.getPhoneNumber());
+      streetAddress.setText(this.hotel.getStreetAddress());
+      city.setText(this.hotel.getCity());
+      country.setText(this.hotel.getCountry());
    }
    
    @Override
