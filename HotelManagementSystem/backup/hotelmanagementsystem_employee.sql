@@ -5,7 +5,8 @@ DROP TABLE IF EXISTS employee;
 
 CREATE TABLE employee (
 	EmployeeID int NOT NULL,
-    LoginID int DEFAULT NULL,
+	HotelID int DEFAULT NULL,
+    LoginID varchar(255) DEFAULT NULL,
     Name varchar(255) DEFAULT NULL,
     Title varchar(255) DEFAULT NULL,
     Email varchar(255) DEFAULT NULL,
