@@ -9,9 +9,9 @@ public class Employee {
 	private String title;
 	private String email;
 	private String phoneNumber;
-	private String streetAddress;
+	private String address;
 	
-	public Employee(int customerId, int hotelId, String loginId, String name, String title, String email, String phoneNumber, String streetAddress) {
+	public Employee(int customerId, int hotelId, String loginId, String name, String title, String email, String phoneNumber, String address) {
 		this.customerId = customerId;
 		this.hotelId = hotelId;
 		this.loginId = loginId;
@@ -19,10 +19,10 @@ public class Employee {
 		this.title = title;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
-		this.streetAddress = streetAddress;
+		this.address = address;
 	}
 	
-	public int getCustomerId() {
+	public int getEmployeeId() {
        return customerId;
     }
 	
@@ -46,13 +46,11 @@ public class Employee {
        return phoneNumber;
     }
    
-    public String getStreetAddress() {
-       return streetAddress;
+    public String getAddress() {
+       return address;
     }
    
     public String getEmail() {
        return email;
     }
-
-
 }

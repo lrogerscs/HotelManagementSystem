@@ -66,14 +66,12 @@ public class EditHotelController implements Initializable {
                + " where HotelId = " + hotel.getHotelId());
          statement.executeUpdate("update Room set HotelID = " + hotelId.getText() 
                + " where HotelID = " + hotel.getHotelId());
-         // Add query to update employees
+         statement.executeUpdate("update Employee set HotelID = " + hotelId.getText() 
+               + "where HotelID = " + hotel.getHotelId());
          connection.close();
          
-         Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
-         Scene scene = new Scene(root);
-         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-         stage.setScene(scene);
-         stage.show();
+         // Return to home
+         onBackButtonClick(event);
       } catch (Exception e) {
          e.printStackTrace();
       }

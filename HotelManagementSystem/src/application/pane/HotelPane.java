@@ -25,13 +25,14 @@ import javafx.stage.Stage;
 
 public class HotelPane extends VBox {
    private Hotel hotel;
-   private Label name, address, phoneNumber;
+   private Label hotelId, name, address, phoneNumber;
    private Button details, edit, delete;
    private VBox titlePane, descPane;
    private HBox buttonPane;
    
    public HotelPane(Hotel hotel) {
       this.hotel = hotel;
+      hotelId = new Label("Hotel ID: " + this.hotel.getHotelId());
       name = new Label(this.hotel.getName());
       address = new Label("Location: " + this.hotel.getStreetAddress() + ", " + this.hotel.getCity() + ", " + this.hotel.getCountry());
       phoneNumber = new Label("Phone: " + this.hotel.getPhoneNumber());
@@ -47,7 +48,7 @@ public class HotelPane extends VBox {
       delete.setOnAction(event -> deleteHotel(event));
       
       titlePane.getChildren().add(name);
-      descPane.getChildren().addAll(address, phoneNumber, details);
+      descPane.getChildren().addAll(hotelId, address, phoneNumber, details);
       buttonPane.getChildren().addAll(details, edit, delete);
       getChildren().addAll(titlePane, descPane, buttonPane);
       
@@ -105,7 +106,8 @@ public class HotelPane extends VBox {
          statement.executeUpdate("delete from Hotel where HotelID = " + hotel.getHotelId());
          statement.executeUpdate("delete from Amenities where HotelID = " + hotel.getHotelId());
          statement.executeUpdate("delete from Room where HotelID = " + hotel.getHotelId());
-         // Write query to delete from employee
+         statement.executeUpdate("delete from Employee where HotelID = " + hotel.getHotelId());
+         connection.close();
          
          // Reload home
          FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home.fxml"));

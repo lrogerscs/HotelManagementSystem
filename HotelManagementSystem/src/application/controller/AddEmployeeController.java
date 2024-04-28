@@ -11,6 +11,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 import application.database.DatabaseConnection;
+import application.hotel.Hotel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,45 +22,56 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class AddHotelController implements Initializable {
+public class AddEmployeeController implements Initializable {
+   @FXML
+   private TextField employeeId;
+   
    @FXML
    private TextField hotelId;
+   
+   @FXML
+   private TextField loginId;
    
    @FXML
    private TextField name;
    
    @FXML
+   private TextField title;
+   
+   @FXML
+   private TextField email;
+   
+   @FXML
    private TextField phoneNumber;
    
    @FXML
-   private TextField streetAddress;
-   
-   @FXML
-   private TextField city;
-   
-   @FXML
-   private TextField country;
+   private TextField address;
    
    private String dbUrl;
    private String dbUser;
    private String dbPassword;
+   private Hotel hotel;
    
    @FXML
    private void onSaveButtonClick(ActionEvent event) {
-      if (hotelId.getText() == null || hotelId.getText().isEmpty() 
-            || name.getText() == null || name.getText().isEmpty()
+      if (employeeId.getText() == null || employeeId.getText().isEmpty() 
+            || hotelId.getText() == null || hotelId.getText().isEmpty()
+            || loginId.getText() == null || loginId.getText().isEmpty()
+            || name.getText() == null || name.getText().isEmpty() 
+            || title.getText() == null || title.getText().isEmpty() 
+            || email.getText() == null || email.getText().isEmpty()
             || phoneNumber.getText() == null || phoneNumber.getText().isEmpty()
-            || streetAddress.getText() == null || streetAddress.getText().isEmpty() 
-            || city.getText() == null || city.getText().isEmpty() 
-            || country.getText() == null || country.getText().isEmpty())
+            || address.getText() == null || address.getText().isEmpty())
          return;
       
       try {
          Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
          Statement statement = connection.createStatement();
-         statement.executeUpdate("insert into Hotel(HotelID, Name, PhoneNumber, StreetAddress, City, Country)"
-               + " values (" + hotelId.getText() + ", '" + name.getText() + "', '" + phoneNumber.getText() + "', '"
-               + streetAddress.getText() + "', '" + city.getText() + "', '" + country.getText() + "')");
+         statement.executeUpdate("insert into Employee(EmployeeID, HotelID, LoginID, Name, Title, Email, PhoneNumber, Address) values (" 
+                  + employeeId.getText() + ", " + hotelId.getText() + ", '" + loginId.getText() 
+                  + "', '" + name.getText() + "', '" + title.getText() + "', '" + email.getText() 
+                  + "', '" + phoneNumber.getText() + "', '" + address.getText() + "')");
+         // TODO: Add query to insert into AuthenticationSystem
          connection.close();
          
          // Return to home
@@ -72,14 +84,22 @@ public class AddHotelController implements Initializable {
    @FXML
    private void onBackButtonClick(ActionEvent event) {
       try {
-         Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/hotel.fxml"));
+         Parent root = loader.load();
+         HotelController controller = loader.getController();
          Scene scene = new Scene(root);
          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+         
          stage.setScene(scene);
          stage.show();
+         controller.setHotel(hotel);
       } catch (IOException e) {
          e.printStackTrace();
       }
+   }
+   
+   public void setHotel(Hotel hotel) {
+      this.hotel = hotel;
    }
    
    @Override
