@@ -3,34 +3,28 @@ package application.employee;
 public class Employee {
 		
 	private int customerId;
-	private int hotelId;
-	private String loginId;
+	private int loginId;
 	private String name;
 	private String title;
 	private String email;
 	private String phoneNumber;
-	private String address;
+	private String streetAddress;
 	
-	public Employee(int customerId, int hotelId, String loginId, String name, String title, String email, String phoneNumber, String address) {
+	public Employee(int customerId, int loginId, String name, String title, String email, String phoneNumber, String streetAddress) {
 		this.customerId = customerId;
-		this.hotelId = hotelId;
 		this.loginId = loginId;
 		this.name = name;
 		this.title = title;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
-		this.address = address;
+		this.streetAddress = streetAddress;
 	}
 	
-	public int getEmployeeId() {
+	public int getCustomerId() {
        return customerId;
     }
 	
-	public int getHotelId() {
-	   return hotelId;
-	}
-	
-	public String getLoginId() {
+	public int getLoginId() {
 	   return loginId;
 	}
    
@@ -46,11 +40,13 @@ public class Employee {
        return phoneNumber;
     }
    
-    public String getAddress() {
-       return address;
+    public String getStreetAddress() {
+       return streetAddress;
     }
    
     public String getEmail() {
        return email;
     }
+
+
 }

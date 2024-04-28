@@ -2,11 +2,9 @@ package application.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -22,10 +20,24 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class HomeController implements Initializable {
+   @FXML
+   private VBox employeePanelPane;
+
+   @FXML
+   private Label employeeNameLabel;
+
+   @FXML
+   private Label employeeTitleLabel;
+
+   @FXML
+   private Label employeeEmailLabel;
+
+   
    @FXML
    private VBox hotelPanelPane;
    
@@ -49,6 +61,7 @@ public class HomeController implements Initializable {
    @Override
    public void initialize(URL location, ResourceBundle resources) {
       try {
+    	  
          ArrayList<Hotel> hotels = new ArrayList<Hotel>();
          
          // Retrieve DB credentials
@@ -80,9 +93,7 @@ public class HomeController implements Initializable {
             hotelPanelPane.getChildren().add(new HotelPane(hotel));
          
          connection.close();
-      } catch (IOException e) {
-         e.printStackTrace();
-      } catch (SQLException e) {
+      } catch (Exception e) {
          e.printStackTrace();
       }
    }

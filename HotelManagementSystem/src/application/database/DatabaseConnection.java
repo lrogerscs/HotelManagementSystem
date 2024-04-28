@@ -1,7 +1,6 @@
 package application.database;
 
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.Connection;
 
 public class DatabaseConnection {
@@ -11,9 +10,7 @@ public class DatabaseConnection {
       try {
          Class.forName("com.mysql.cj.jdbc.Driver");
          connection = DriverManager.getConnection(url, user, password);
-      } catch (ClassNotFoundException e) {
-         e.printStackTrace();
-      } catch (SQLException e) {
+      } catch (Exception e) {
          e.printStackTrace();
       }
       return connection;

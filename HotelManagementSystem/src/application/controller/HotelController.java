@@ -14,9 +14,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 import application.database.DatabaseConnection;
-import application.employee.Employee;
 import application.hotel.Hotel;
-import application.pane.EmployeePane;
 import application.pane.RoomPane;
 import application.room.Room;
 import javafx.event.ActionEvent;
@@ -27,41 +25,20 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class HotelController implements Initializable {
    @FXML
-   private HBox amenitiesPanelPane;
-   
-   @FXML
-   private VBox employeePanelPane;
-   
-   @FXML
    private VBox roomPanelPane;
+   
+   @FXML
+   private VBox amenitiesPanelPane;
    
    private Hotel hotel;
    private String dbUrl;
    private String dbUser;
    private String dbPassword;
-   
-   @FXML
-   private void onAddEmployeeButtonClick(ActionEvent event) {
-      try {
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/add_employee.fxml"));
-         Parent root = loader.load();
-         AddEmployeeController controller = loader.getController();
-         Scene scene = new Scene(root);
-         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-         
-         stage.setScene(scene);
-         stage.show();
-         controller.setHotel(hotel);
-      } catch (IOException e) {
-         e.printStackTrace();
-      }
-   }
    
    @FXML
    private void onBackButtonClick(ActionEvent event) {
@@ -71,7 +48,7 @@ public class HotelController implements Initializable {
          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          stage.setScene(scene);
          stage.show();
-      } catch (IOException e) {
+      } catch (Exception e) {
          e.printStackTrace();
       }
    }
@@ -81,7 +58,6 @@ public class HotelController implements Initializable {
       
       try {
          ArrayList<String> amenities = new ArrayList<String>();
-         ArrayList<Employee> employees = new ArrayList<Employee>();
          ArrayList<Room> rooms = new ArrayList<Room>();
          Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
          Statement statement = connection.createStatement();
@@ -90,21 +66,6 @@ public class HotelController implements Initializable {
          ResultSet resultSet = statement.executeQuery("select * from Amenities where HotelID = " + this.hotel.getHotelId());
          while (resultSet.next())
             amenities.add(resultSet.getString(2));
-         
-         // Find Employees
-         resultSet = statement.executeQuery("select * from Employee where HotelID = " + this.hotel.getHotelId());
-         while (resultSet.next()) {
-            int employeeId = resultSet.getInt(1);
-            int hotelId = resultSet.getInt(2);
-            String loginId = resultSet.getString(3);
-            String name = resultSet.getString(4);
-            String title = resultSet.getString(5);
-            String email = resultSet.getString(6);
-            String phoneNumber = resultSet.getString(7);
-            String address = resultSet.getString(8);
-            
-            employees.add(new Employee(employeeId, hotelId, loginId, name, title, email, phoneNumber, address));
-         }
          
          // Find rooms
          resultSet = statement.executeQuery("select * from Room where HotelID = " + this.hotel.getHotelId());
@@ -119,9 +80,7 @@ public class HotelController implements Initializable {
          }
          
          for (String amenity : amenities)
-            amenitiesPanelPane.getChildren().add(new Label("• " + amenity));
-         for (Employee employee : employees)
-            employeePanelPane.getChildren().add(new EmployeePane(this.hotel, employee));
+            amenitiesPanelPane.getChildren().add(new Label(amenity));
          for (Room room : rooms)
             roomPanelPane.getChildren().add(new RoomPane(room));
          
