@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -57,16 +58,13 @@ public class AddHotelController implements Initializable {
          Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
          Statement statement = connection.createStatement();
          statement.executeUpdate("insert into Hotel(HotelID, Name, PhoneNumber, StreetAddress, City, Country)"
-               + " values ('" + hotelId.getText() + "', '" + name.getText() + "', '" + phoneNumber.getText() + "', '"
+               + " values (" + hotelId.getText() + ", '" + name.getText() + "', '" + phoneNumber.getText() + "', '"
                + streetAddress.getText() + "', '" + city.getText() + "', '" + country.getText() + "')");
          connection.close();
          
-         Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
-         Scene scene = new Scene(root);
-         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-         stage.setScene(scene);
-         stage.show();
-      } catch (Exception e) {
+         // Return to home
+         onBackButtonClick(event);
+      } catch (SQLException e) {
          e.printStackTrace();
       }
    }
@@ -79,7 +77,7 @@ public class AddHotelController implements Initializable {
          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          stage.setScene(scene);
          stage.show();
-      } catch (Exception e) {
+      } catch (IOException e) {
          e.printStackTrace();
       }
    }

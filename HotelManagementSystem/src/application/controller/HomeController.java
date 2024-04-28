@@ -2,14 +2,15 @@ package application.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.ResourceBundle;
-
 import application.database.DatabaseConnection;
 import application.hotel.Hotel;
 import application.pane.HotelPane;
@@ -25,21 +26,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class HomeController implements Initializable {
-   @FXML
-   private VBox employeePanelPane;
-
-   @FXML
-   private Label employeeNameLabel;
-
-   @FXML
-   private Label employeeTitleLabel;
-
-   @FXML
-   private Label employeeEmailLabel;
-
-   
+	   
    @FXML
    private VBox hotelPanelPane;
+   
+   @FXML
+   private Label usernameLabel; 
    
    private String dbUrl;
    private String dbUser;
@@ -61,7 +53,6 @@ public class HomeController implements Initializable {
    @Override
    public void initialize(URL location, ResourceBundle resources) {
       try {
-    	  
          ArrayList<Hotel> hotels = new ArrayList<Hotel>();
          
          // Retrieve DB credentials
@@ -75,7 +66,19 @@ public class HomeController implements Initializable {
          // Read hotels
          Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
          Statement statement = connection.createStatement();
+
+         // Read login user name
+         Connection connectionLogin = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
+         Statement statementLogin = connectionLogin.createStatement();
+         
+         String username = LoginController.loggedInUser;
+         
+         String usernameQuery = String.format("SELECT Name FROM employee WHERE LoginID = '%s'", username);
+         ResultSet ename = statementLogin.executeQuery(usernameQuery);
+         
          ResultSet resultSet = statement.executeQuery("select * from Hotel");
+    
+         
          
          while (resultSet.next()) {
             int hotelId = resultSet.getInt(1);
@@ -87,13 +90,20 @@ public class HomeController implements Initializable {
             
             hotels.add(new Hotel(hotelId, name, phoneNumber, streetAddress, city, country));
          }
+
+         while(ename.next()) {
+        	 username = ename.getString(1);
+         }
+         usernameLabel.setText(username);
          
          // Display hotels
          for (Hotel hotel : hotels)
             hotelPanelPane.getChildren().add(new HotelPane(hotel));
          
          connection.close();
-      } catch (Exception e) {
+      } catch (IOException e) {
+         e.printStackTrace();
+      } catch (SQLException e) {
          e.printStackTrace();
       }
    }
