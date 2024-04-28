@@ -36,27 +36,7 @@ CREATE TABLE `amenities` (
 
 LOCK TABLES `amenities` WRITE;
 /*!40000 ALTER TABLE `amenities` DISABLE KEYS */;
-INSERT INTO `amenities` VALUES (1,'Spa'),(2,'Pool');
-INSERT INTO `amenities` (`HotelID`, `Amenity`) VALUES
-(1, 'Gym'),
-(2, 'Restaurant'),
-(3, 'Conference Room'),
-(3, 'Spa'),
-(4, 'Fitness Center'),
-(4, 'Bar'),
-(5, 'Business Center'),
-(5, 'Lounge'),
-(6, 'Free Wi-Fi'),
-(6, 'Room Service'),
-(7, 'Laundry Service'),
-(7, 'Parking'),
-(8, 'Jacuzzi'),
-(8, 'Airport Shuttle'),
-(9, 'Garden'),
-(9, 'Terrace'),
-(10, 'Pet-friendly'),
-(10, 'Beach Access');
-
+INSERT INTO `amenities` VALUES (1,'Spa'),(2,'Pool'),(1,'Gym'),(2,'Restaurant'),(3,'Conference Room'),(3,'Spa'),(4,'Fitness Center'),(4,'Bar'),(5,'Business Center'),(5,'Lounge'),(6,'Free Wi-Fi'),(6,'Room Service'),(7,'Laundry Service'),(7,'Parking'),(8,'Jacuzzi'),(8,'Airport Shuttle'),(9,'Garden'),(9,'Terrace'),(10,'Pet-friendly'),(10,'Beach Access');
 /*!40000 ALTER TABLE `amenities` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -69,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-21 17:08:01
+-- Dump completed on 2024-04-27 21:59:07
