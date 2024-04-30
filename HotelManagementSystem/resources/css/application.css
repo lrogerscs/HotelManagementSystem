@@ -77,6 +77,12 @@
    -fx-spacing: 10;
 }
 
+.text-field-pane {
+   -fx-font-size: 16;
+   -fx-alignment: center-left;
+   -fx-spacing: 10;
+}
+
 .label {
    -fx-font-family: "Red Hat Display";
 }
@@ -134,4 +140,24 @@
 
 .scroll-bar:vertical .decrement-button .decrement-arrow {
    -fx-background-color: transparent;
+}
+
+.check-box {
+   -fx-font-family: "Red Hat Display";
+   -fx-font-size: 16;
+}
+
+.check-box .box {
+   -fx-background-color: #ffffff;
+   -fx-border-color: #696969;
+   -fx-border-radius: 5;
+   -fx-border-width: 1.5;
+}
+
+.check-box:selected .mark {
+   -fx-background-color: #696969;
+}
+
+.check-box:selected .box {
+   -fx-background-color: #ffffff;
 }

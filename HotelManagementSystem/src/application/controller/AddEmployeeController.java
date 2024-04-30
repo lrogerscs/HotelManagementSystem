@@ -19,7 +19,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class AddEmployeeController implements Initializable {
@@ -28,9 +32,6 @@ public class AddEmployeeController implements Initializable {
    
    @FXML
    private TextField hotelId;
-   
-   @FXML
-   private TextField loginId;
    
    @FXML
    private TextField name;
@@ -47,16 +48,25 @@ public class AddEmployeeController implements Initializable {
    @FXML
    private TextField address;
    
+   @FXML
+   private CheckBox systemAccess;
+   
+   @FXML
+   private VBox inputFieldPanelPane;
+   
    private String dbUrl;
    private String dbUser;
    private String dbPassword;
    private Hotel hotel;
+   private TextField loginId;
+   private TextField loginPassword;
+   private HBox loginIdPane;
+   private HBox loginPasswordPane;
    
    @FXML
    private void onSaveButtonClick(ActionEvent event) {
       if (employeeId.getText() == null || employeeId.getText().isEmpty() 
             || hotelId.getText() == null || hotelId.getText().isEmpty()
-            || loginId.getText() == null || loginId.getText().isEmpty()
             || name.getText() == null || name.getText().isEmpty() 
             || title.getText() == null || title.getText().isEmpty() 
             || email.getText() == null || email.getText().isEmpty()
@@ -64,14 +74,22 @@ public class AddEmployeeController implements Initializable {
             || address.getText() == null || address.getText().isEmpty())
          return;
       
+      // If employee has system access, check if login fields are empty
+      if (systemAccess.isSelected() && (loginId.getText() == null || loginId.getText().isEmpty() 
+            || loginPassword.getText() == null || loginPassword.getText().isEmpty()))
+         return;
+      
       try {
          Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
          Statement statement = connection.createStatement();
          statement.executeUpdate("insert into Employee(EmployeeID, HotelID, LoginID, Name, Title, Email, PhoneNumber, Address) values (" 
-                  + employeeId.getText() + ", " + hotelId.getText() + ", '" + loginId.getText() 
-                  + "', '" + name.getText() + "', '" + title.getText() + "', '" + email.getText() 
+                  + employeeId.getText() + ", " + hotelId.getText() 
+                  + (systemAccess.isSelected() ? ", '" + loginId.getText() + "', '": ", null, '")
+                  + name.getText() + "', '" + title.getText() + "', '" + email.getText() 
                   + "', '" + phoneNumber.getText() + "', '" + address.getText() + "')");
-         // TODO: Add query to insert into AuthenticationSystem
+         if (systemAccess.isSelected()) {
+            // TODO: Add query to insert LoginID, Password insert AuthenticationSystem
+         }
          connection.close();
          
          // Return to home
@@ -79,6 +97,14 @@ public class AddEmployeeController implements Initializable {
       } catch (SQLException e) {
          e.printStackTrace();
       }
+   }
+   
+   @FXML
+   private void onSystemAccessCheckBoxClick(ActionEvent event) {
+      if (systemAccess.isSelected())
+         inputFieldPanelPane.getChildren().addAll(loginIdPane, loginPasswordPane);
+      else
+         inputFieldPanelPane.getChildren().removeAll(loginIdPane, loginPasswordPane);
    }
    
    @FXML
@@ -104,6 +130,14 @@ public class AddEmployeeController implements Initializable {
    
    @Override
    public void initialize(URL location, ResourceBundle resources) {
+      loginId = new TextField();
+      loginPassword = new TextField();
+      loginIdPane = new HBox(new Label("LoginID:"), loginId);
+      loginPasswordPane = new HBox(new Label("Login Password:"), loginPassword);
+      
+      loginIdPane.getStyleClass().add("text-field-pane");
+      loginPasswordPane.getStyleClass().add("text-field-pane");
+      
       try {
          // Retrieve DB credentials
          Properties properties = new Properties();

@@ -88,8 +88,11 @@ public class EmployeePane extends VBox {
          // Delete data
          Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
          Statement statement = connection.createStatement();
+         
          statement.executeUpdate("delete from Employee where EmployeeID = " + employee.getEmployeeId());
-         // TODO: Add query to delete from AuthenticationSystem
+         if (employee.getLoginId() != null)
+            statement.executeUpdate("delete from AuthenticationSystem where LoginID = " + employee.getEmployeeId());
+         
          connection.close();
          
          // Reload hotel
