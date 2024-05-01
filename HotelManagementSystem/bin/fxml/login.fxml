@@ -28,6 +28,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
+            <Button fx:id="changePasswordButton" layoutX="409.0" layoutY="12.0" mnemonicParsing="false" onAction="#onChangePasswordButtonClick" text="Change Password" />
          </children>
       </AnchorPane>
    </bottom>

@@ -39,10 +39,13 @@ public class LoginController implements Initializable {
 	private Button loginButton;
 	
 	@FXML
-   private CheckBox showPasswordCheckbox;
-	
+    private CheckBox showPasswordCheckbox;
+
 	@FXML
-	private PasswordField passwordField;
+    private PasswordField passwordField;
+
+	@FXML
+	private Button changePasswordButton;
 	
 	private String dbUrl;
 	private String dbUser;
@@ -65,6 +68,21 @@ public class LoginController implements Initializable {
          }
 	   }
 	}
+	
+	
+	@FXML
+    private void onChangePasswordButtonClick(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/change_password.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+	
 	
 	private boolean isValidLogin(String loginUser, String loginPassword) {
 	   boolean valid = false;
@@ -92,28 +110,29 @@ public class LoginController implements Initializable {
 	}
 	
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-	    try {
-	        // Retrieve DB credentials
-	        Properties properties = new Properties();
-	        properties.load(new FileInputStream(new File("resources/credentials/credentials.properties")));
-	        
-	        showPasswordCheckbox.setOnAction(e -> {
-	            if (showPasswordCheckbox.isSelected()) {
-	                passwordField.setPromptText(passwordField.getText());
-	                passwordField.setText("");
-	            } else {
-	                passwordField.setText(passwordField.getPromptText());
-	                passwordField.setPromptText("Password");
-	            }
-	        });
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            // Retrieve DB credentials
+            Properties properties = new Properties();
+            properties.load(new FileInputStream(new File("resources/credentials/credentials.properties")));
 
-	        dbUrl = properties.getProperty("url");
-	        dbUser = properties.getProperty("user");
-	        dbPassword = properties.getProperty("password"); // Store the actual password
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
-	}
+            showPasswordCheckbox.setOnAction(e -> {
+                if (showPasswordCheckbox.isSelected()) {
+                    passwordField.setPromptText(passwordField.getText());
+                    passwordField.setText("");
+                } else {
+                    passwordField.setText(passwordField.getPromptText());
+                    passwordField.setPromptText("Password");
+                }
+            });
+
+            dbUrl = properties.getProperty("url");
+            dbUser = properties.getProperty("user");
+            dbPassword = properties.getProperty("password"); // Store the actual password
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
