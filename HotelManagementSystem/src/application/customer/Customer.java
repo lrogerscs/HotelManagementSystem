@@ -12,9 +12,9 @@ public class Customer {
 	private String email;
 	private String phoneNumber;
 	private String paymentMethod;
-	private String streetAddress;
+	private String address;
 	
-	public Customer(int customerId, int roomId, String name, Date dob, int age, String email, String phoneNumber, String paymentMethod, String streetAddress) {
+	public Customer(int customerId, int roomId, String name, Date dob, int age, String email, String phoneNumber, String paymentMethod, String address) {
 		this.customerId = customerId;
 		this.roomId = roomId;
 		this.name = name;
@@ -23,7 +23,7 @@ public class Customer {
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.paymentMethod = paymentMethod;
-		this.streetAddress = streetAddress;
+		this.address = address;
 	}
 	
 	public int getCustomerId() {
@@ -50,8 +50,8 @@ public class Customer {
        return phoneNumber;
     }
    
-    public String getStreetAddress() {
-       return streetAddress;
+    public String getAddress() {
+       return address;
     }
    
     public String getPaymentMethod() {

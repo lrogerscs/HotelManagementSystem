@@ -13,8 +13,10 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+import application.customer.Customer;
 import application.database.DatabaseConnection;
 import application.hotel.Hotel;
+import application.pane.CustomerPane;
 import application.pane.PaymentPane;
 import application.payment.Payment;
 import application.room.Room;
@@ -69,6 +71,7 @@ public class RoomController implements Initializable {
       
       try {
          ArrayList<String> features = new ArrayList<String>();
+         ArrayList<Customer> customers = new ArrayList<Customer>();
          ArrayList<Payment> payments = new ArrayList<Payment>();
          Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
          Statement statement = connection.createStatement();
@@ -77,6 +80,22 @@ public class RoomController implements Initializable {
          ResultSet resultSet = statement.executeQuery("select * from Features where RoomID = " + this.room.getRoomId());
          while (resultSet.next())
             features.add(resultSet.getString(2));
+         
+         // Find customers
+         resultSet = statement.executeQuery("select * from Customer where RoomID = " + this.room.getRoomId());
+         while (resultSet.next()) {
+            int customerId = resultSet.getInt(1);
+            int roomId = resultSet.getInt(2);
+            String name = resultSet.getString(3);
+            Date dob = resultSet.getDate(4);
+            int age = resultSet.getInt(5);
+            String email = resultSet.getString(6);
+            String phoneNumber = resultSet.getString(7);
+            String paymentMethod = resultSet.getString(8);
+            String address = resultSet.getString(9);
+            
+            customers.add(new Customer(customerId, roomId, name, dob, age, email, phoneNumber, paymentMethod, address));
+         }
          
          // Find Payments
          resultSet = statement.executeQuery("select * from Payment where RoomID = " + this.room.getRoomId());
@@ -95,6 +114,8 @@ public class RoomController implements Initializable {
          
          for (String feature : features)
             featuresPanelPane.getChildren().add(new Label("• " + feature));
+         for (Customer customer : customers)
+            customerPanelPane.getChildren().add(new CustomerPane(customer));
          for (Payment payment : payments)
             paymentPanelPane.getChildren().add(new PaymentPane(payment));
       } catch (SQLException e) {
