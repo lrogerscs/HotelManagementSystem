@@ -58,7 +58,7 @@ INSERT INTO `features` (`RoomID`, `Feature`) VALUES
 (10, 'Game Console'),
 (10, 'Unlimited Towels');
 
-/*!40000 ALTER TABLE `amenities` ENABLE KEYS */;
+/*!40000 ALTER TABLE `features` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

@@ -94,9 +94,36 @@ public class EditEmployeeController implements Initializable {
                + "', Address = '" + address.getText() 
                + "' where EmployeeID = " + employee.getEmployeeId());
          if (systemAccess.isSelected()) {
-            // TODO: Add query to update row in AuthenticationSystem
+        	 try {
+        	        //Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
+        	        //Statement statement = connection.createStatement();
+        	        
+        	        // Check if the login ID already exists in the AuthenticationSystem table
+        	        ResultSet resultSet = statement.executeQuery("SELECT * FROM AuthenticationSystem WHERE LoginID = '" + loginId.getText() + "'");
+        	        
+        	        if (resultSet.next()) {
+        	            // If the login ID exists, update the password
+        	            statement.executeUpdate("UPDATE AuthenticationSystem SET Password = '" + loginPassword.getText() + "' WHERE LoginID = '" + loginId.getText() + "'");
+        	        } else {
+        	            // If the login ID doesn't exist, insert a new entry
+        	            statement.executeUpdate("INSERT INTO AuthenticationSystem (LoginID, Password) VALUES ('" + loginId.getText() + "', '" + loginPassword.getText() + "')");
+        	        }
+        	        
+        	        connection.close();
+        	    } catch (SQLException e) {
+        	        e.printStackTrace();
+        	    }
          } else {
             // TODO: Add query to delete row from AuthenticationSystem
+        	 try {
+        	        
+        	        // Delete the entry from the AuthenticationSystem table
+        	        statement.executeUpdate("DELETE FROM AuthenticationSystem WHERE LoginID = '" + employee.getLoginId() + "'");
+        	        
+        	        connection.close();
+        	    } catch (SQLException e) {
+        	        e.printStackTrace();
+        	    }
          }
          connection.close();
          
