@@ -95,9 +95,6 @@ public class EditEmployeeController implements Initializable {
                + "' where EmployeeID = " + employee.getEmployeeId());
          if (systemAccess.isSelected()) {
         	 try {
-        	        //Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
-        	        //Statement statement = connection.createStatement();
-        	        
         	        // Check if the login ID already exists in the AuthenticationSystem table
         	        ResultSet resultSet = statement.executeQuery("SELECT * FROM AuthenticationSystem WHERE LoginID = '" + loginId.getText() + "'");
         	        
@@ -113,18 +110,7 @@ public class EditEmployeeController implements Initializable {
         	    } catch (SQLException e) {
         	        e.printStackTrace();
         	    }
-         } else {
-            // TODO: Add query to delete row from AuthenticationSystem
-        	 try {
-        	        
-        	        // Delete the entry from the AuthenticationSystem table
-        	        statement.executeUpdate("DELETE FROM AuthenticationSystem WHERE LoginID = '" + employee.getLoginId() + "'");
-        	        
-        	        connection.close();
-        	    } catch (SQLException e) {
-        	        e.printStackTrace();
-        	    }
-         }
+         } 
          connection.close();
          
          // Return to home

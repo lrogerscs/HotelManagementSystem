@@ -87,9 +87,8 @@ public class AddEmployeeController implements Initializable {
                   + (systemAccess.isSelected() ? ", '" + loginId.getText() + "', '": ", null, '")
                   + name.getText() + "', '" + title.getText() + "', '" + email.getText() 
                   + "', '" + phoneNumber.getText() + "', '" + address.getText() + "')");
-         if (systemAccess.isSelected()) {
-            // TODO: Add query to insert LoginID, Password insert AuthenticationSystem
-         }
+         statement.executeUpdate("INSERT INTO AuthenticationSystem (LoginID, Password) VALUES ('" + loginId.getText() 
+         			+ "', '" + loginPassword.getText() + "')");
          connection.close();
          
          // Return to home
