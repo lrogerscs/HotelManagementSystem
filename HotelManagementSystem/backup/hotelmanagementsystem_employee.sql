@@ -43,18 +43,18 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (1,1,'Emp1','Jane Doe','Receptionist','janedoe@hotel.com','(123) 456-7890','123 Jane Lane, San Jose, CA USA'),
-(2,2,'Employee2','John Smith','Housekeeping','johnsmith@hotel.com','(987) 654-3210','456 Maple Street, Seattle, WA, USA'),
-(3,2,'Employee3','Emily Johnson','Chef','emily.johnson@hotel.com','(111) 222-3333','789 Oak Avenue, New York, NY, USA'),
-(4,2,'Employee4','Michael Brown','Front Desk Manager','michael.brown@hotel.com','(444) 555-6666','101 Pine Street, Chicago, IL, USA'),
-(5,2,'Employee5','Sarah Davis','Concierge','sarah.davis@hotel.com','(777) 888-9999','202 Elm Street, Los Angeles, CA, USA'),
-(6,2,'Employee6','David Wilson','Bellhop','david.wilson@hotel.com','(222) 333-4444','303 Birch Street, Miami, FL, USA'),
-(7,1,'Employee7','Jessica Martinez','Housekeeping Supervisor','jessica.martinez@hotel.com','(555) 666-7777','404 Cedar Street, Houston, TX, USA'),
-(8,1,'Employee8','Christopher Taylor','Event Planner','christopher.taylor@hotel.com','(999) 888-7777','505 Oak Street, San Francisco, CA, USA'),
-(9,1,'Employee9','Amanda Clark','Security Officer','amanda.clark@hotel.com','(333) 222-1111','606 Pine Street, Boston, MA, USA'),
-(10,1,'Employee10','Daniel Rodriguez','Maintenance Technician','daniel.rodriguez@hotel.com','(666) 555-4444','707 Maple Street, Dallas, TX, USA'),
-(46,3,'the','Jenna Robert','Cleaner','jennar@hotel.com','123-123-123','1 Jenna R. Street, San Francisco, CA, USA'),
-(1000,1,'Admin','George G. Admin','Manager','george@hotel.com','123-321','1 George Way, San Jose, CA');
+INSERT INTO `employee` VALUES (1,1,'Emp1','Jane Doe','Receptionist','janedoe@hotel.com','(123) 456-7890','123 Jane Lane, San Jose, CA, 95123'),
+(2,2,'Employee2','John Smith','Housekeeping','johnsmith@hotel.com','(987) 654-3210','456 Maple Street, Seattle, WA, 45741'),
+(3,2,'Employee3','Emily Johnson','Chef','emily.johnson@hotel.com','(111) 222-3333','789 Oak Avenue, New York, NY, 04741'),
+(4,2,'Employee4','Michael Brown','Front Desk Manager','michael.brown@hotel.com','(444) 555-6666','101 Pine Street, Chicago, IL, 56472'),
+(5,2,'Employee5','Sarah Davis','Concierge','sarah.davis@hotel.com','(777) 888-9999','202 Elm Street, Los Angeles, CA, 91234'),
+(6,2,'Employee6','David Wilson','Bellhop','david.wilson@hotel.com','(222) 333-4444','303 Birch Street, Miami, FL, 85213'),
+(7,1,'Employee7','Jessica Martinez','Housekeeping Supervisor','jessica.martinez@hotel.com','(555) 666-7777','404 Cedar Street, Houston, TX, 42175'),
+(8,1,'Employee8','Christopher Taylor','Event Planner','christopher.taylor@hotel.com','(999) 888-7777','505 Oak Street, San Francisco, CA, 91425'),
+(9,1,'Employee9','Amanda Clark','Security Officer','amanda.clark@hotel.com','(333) 222-1111','606 Pine Street, Boston, MA, 65572'),
+(10,1,'Employee10','Daniel Rodriguez','Maintenance Technician','daniel.rodriguez@hotel.com','(666) 555-4444','707 Maple Street, Dallas, TX, 57471'),
+(46,3,'the','Jenna Robert','Cleaner','jennar@hotel.com','(123)-123-123','1 Jenna R. Street, San Francisco, CA, 91425'),
+(1000,1,'Admin','George G. Admin','Manager','george@hotel.com','(321)-321-321','1 George Way, San Jose, CA, 95124');
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
