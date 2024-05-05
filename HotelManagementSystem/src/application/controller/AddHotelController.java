@@ -18,7 +18,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class AddHotelController implements Initializable {
@@ -62,10 +64,21 @@ public class AddHotelController implements Initializable {
                + streetAddress.getText() + "', '" + city.getText() + "', '" + country.getText() + "')");
          connection.close();
          
+         Alert alert = new Alert(AlertType.INFORMATION);
+         alert.setTitle("Add Success");
+         alert.setHeaderText(null);
+         alert.setContentText("Hotel added successfully!");
+         alert.showAndWait();
+         
          // Return to home
          onBackButtonClick(event);
       } catch (SQLException e) {
          e.printStackTrace();
+         Alert alert = new Alert(AlertType.INFORMATION);
+         alert.setTitle("Add Failure");
+         alert.setHeaderText(null);
+         alert.setContentText(e.getMessage());
+         alert.showAndWait();
       }
    }
    

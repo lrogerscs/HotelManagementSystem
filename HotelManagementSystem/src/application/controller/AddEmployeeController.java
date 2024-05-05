@@ -19,9 +19,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -87,14 +89,26 @@ public class AddEmployeeController implements Initializable {
                   + (systemAccess.isSelected() ? ", '" + loginId.getText() + "', '": ", null, '")
                   + name.getText() + "', '" + title.getText() + "', '" + email.getText() 
                   + "', '" + phoneNumber.getText() + "', '" + address.getText() + "')");
-         statement.executeUpdate("INSERT INTO AuthenticationSystem (LoginID, Password) VALUES ('" + loginId.getText() 
-         			+ "', '" + loginPassword.getText() + "')");
+         if (systemAccess.isSelected()) {
+            // TODO: Add query to insert LoginID, Password insert AuthenticationSystem
+         }
          connection.close();
+         
+         Alert alert = new Alert(AlertType.INFORMATION);
+         alert.setTitle("Add Success");
+         alert.setHeaderText(null);
+         alert.setContentText("Employee added successfully!");
+         alert.showAndWait();
          
          // Return to home
          onBackButtonClick(event);
       } catch (SQLException e) {
          e.printStackTrace();
+         Alert alert = new Alert(AlertType.INFORMATION);
+         alert.setTitle("Add Failure");
+         alert.setHeaderText(null);
+         alert.setContentText(e.getMessage());
+         alert.showAndWait();
       }
    }
    

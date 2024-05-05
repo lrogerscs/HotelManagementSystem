@@ -20,6 +20,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class EditHotelController implements Initializable {
    @FXML
@@ -67,13 +69,24 @@ public class EditHotelController implements Initializable {
          statement.executeUpdate("update Room set HotelID = " + hotelId.getText() 
                + " where HotelID = " + hotel.getHotelId());
          statement.executeUpdate("update Employee set HotelID = " + hotelId.getText() 
-               + "where HotelID = " + hotel.getHotelId());
+               + " where HotelID = " + hotel.getHotelId());
          connection.close();
+         
+         Alert alert = new Alert(AlertType.INFORMATION);
+         alert.setTitle("Update Success");
+         alert.setHeaderText(null);
+         alert.setContentText("Hotel updated successfully!");
+         alert.showAndWait();
          
          // Return to home
          onBackButtonClick(event);
       } catch (Exception e) {
-         e.printStackTrace();
+    	  e.printStackTrace();
+    	  Alert alert = new Alert(AlertType.INFORMATION);
+          alert.setTitle("Update Failure");
+          alert.setHeaderText(null);
+          alert.setContentText(e.getMessage());
+          alert.showAndWait();
       }
    }
    

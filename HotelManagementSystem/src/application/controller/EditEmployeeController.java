@@ -21,9 +21,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -94,29 +96,27 @@ public class EditEmployeeController implements Initializable {
                + "', Address = '" + address.getText() 
                + "' where EmployeeID = " + employee.getEmployeeId());
          if (systemAccess.isSelected()) {
-        	 try {
-        	        // Check if the login ID already exists in the AuthenticationSystem table
-        	        ResultSet resultSet = statement.executeQuery("SELECT * FROM AuthenticationSystem WHERE LoginID = '" + loginId.getText() + "'");
-        	        
-        	        if (resultSet.next()) {
-        	            // If the login ID exists, update the password
-        	            statement.executeUpdate("UPDATE AuthenticationSystem SET Password = '" + loginPassword.getText() + "' WHERE LoginID = '" + loginId.getText() + "'");
-        	        } else {
-        	            // If the login ID doesn't exist, insert a new entry
-        	            statement.executeUpdate("INSERT INTO AuthenticationSystem (LoginID, Password) VALUES ('" + loginId.getText() + "', '" + loginPassword.getText() + "')");
-        	        }
-        	        
-        	        connection.close();
-        	    } catch (SQLException e) {
-        	        e.printStackTrace();
-        	    }
-         } 
+            // TODO: Add query to update row in AuthenticationSystem
+         } else {
+            // TODO: Add query to delete row from AuthenticationSystem
+         }
          connection.close();
+         
+         Alert alert = new Alert(AlertType.INFORMATION);
+         alert.setTitle("Update Success");
+         alert.setHeaderText(null);
+         alert.setContentText("Employee updated successfully!");
+         alert.showAndWait();
          
          // Return to home
          onBackButtonClick(event);
       } catch (SQLException e) {
          e.printStackTrace();
+         Alert alert = new Alert(AlertType.INFORMATION);
+         alert.setTitle("Update Failure");
+         alert.setHeaderText(null);
+         alert.setContentText(e.getMessage());
+         alert.showAndWait();
       }
    }
    

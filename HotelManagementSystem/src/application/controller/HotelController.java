@@ -121,7 +121,7 @@ public class HotelController implements Initializable {
          connection.close();
          
          for (String amenity : amenities)
-            amenitiesPanelPane.getChildren().add(new Label("• " + amenity));
+            amenitiesPanelPane.getChildren().add(new Label("* " + amenity));
          for (Employee employee : employees)
             employeePanelPane.getChildren().add(new EmployeePane(this.hotel, employee));
          for (Room room : rooms)
