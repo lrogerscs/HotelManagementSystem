@@ -17,8 +17,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -116,10 +118,26 @@ public class HotelPane extends VBox {
          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          stage.setScene(scene);
          stage.show();
+         
+         Alert alert = new Alert(AlertType.INFORMATION);
+         alert.setTitle("Delete Success");
+         alert.setHeaderText(null);
+         alert.setContentText("Hotel deleted successfully!");
+         alert.showAndWait();
       } catch (IOException e) {
          e.printStackTrace();
+         Alert alert = new Alert(AlertType.INFORMATION);
+         alert.setTitle("Delete Failure");
+         alert.setHeaderText(null);
+         alert.setContentText(e.getMessage());
+         alert.showAndWait();
       } catch (SQLException e) {
          e.printStackTrace();
+         Alert alert = new Alert(AlertType.INFORMATION);
+         alert.setTitle("Delete Failure");
+         alert.setHeaderText(null);
+         alert.setContentText(e.getMessage());
+         alert.showAndWait();
       }
    }
 }

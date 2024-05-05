@@ -18,8 +18,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -91,7 +93,7 @@ public class EmployeePane extends VBox {
          
          statement.executeUpdate("delete from Employee where EmployeeID = " + employee.getEmployeeId());
          if (employee.getLoginId() != null)
-            statement.executeUpdate("delete from AuthenticationSystem where LoginID = " + employee.getEmployeeId());
+            statement.executeUpdate("delete from AuthenticationSystem where LoginID = '" + employee.getLoginId() + "'");
          
          connection.close();
          
@@ -105,10 +107,26 @@ public class EmployeePane extends VBox {
          stage.setScene(scene);
          stage.show();
          controller.setHotel(hotel);
+         
+         Alert alert = new Alert(AlertType.INFORMATION);
+         alert.setTitle("Delete Success");
+         alert.setHeaderText(null);
+         alert.setContentText("Employee deleted successfully!");
+         alert.showAndWait();
       } catch (IOException e) {
          e.printStackTrace();
+         Alert alert = new Alert(AlertType.INFORMATION);
+         alert.setTitle("Delete Failure");
+         alert.setHeaderText(null);
+         alert.setContentText(e.getMessage());
+         alert.showAndWait();
       } catch (SQLException e) {
          e.printStackTrace();
+         Alert alert = new Alert(AlertType.INFORMATION);
+         alert.setTitle("Delete Failure");
+         alert.setHeaderText(null);
+         alert.setContentText(e.getMessage());
+         alert.showAndWait();
       }
    }
 }
