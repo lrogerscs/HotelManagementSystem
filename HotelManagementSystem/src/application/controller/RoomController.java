@@ -17,6 +17,7 @@ import application.customer.Customer;
 import application.database.DatabaseConnection;
 import application.hotel.Hotel;
 import application.pane.CustomerPane;
+import application.pane.FeaturePane;
 import application.pane.PaymentPane;
 import application.payment.Payment;
 import application.room.Room;
@@ -28,8 +29,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class RoomController implements Initializable {
@@ -37,16 +38,36 @@ public class RoomController implements Initializable {
    private HBox featuresPanelPane;
    
    @FXML
-   private VBox customerPanelPane;
+   private FlowPane customerPanelPane;
    
    @FXML
-   private VBox paymentPanelPane;
+   private FlowPane paymentPanelPane;
+   
+   @FXML
+   private Label roomName;
    
    private Hotel hotel;
    private Room room;
    private String dbUrl;
    private String dbUser;
    private String dbPassword;
+   
+   @FXML
+   private void onAddFeatureButtonClick(ActionEvent event) {
+      try {
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/add_feature.fxml"));
+         Parent root = loader.load();
+         AddFeatureController controller = loader.getController();
+         Scene scene = new Scene(root);
+         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+         
+         controller.setHotelRoom(hotel, room);
+         stage.setScene(scene);
+         stage.show();
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+   }
    
    @FXML
    private void onBackButtonClick(ActionEvent event) {
@@ -57,9 +78,9 @@ public class RoomController implements Initializable {
          Scene scene = new Scene(root);
          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          
+         controller.setHotel(hotel);
          stage.setScene(scene);
          stage.show();
-         controller.setHotel(hotel);
       } catch (IOException e) {
          e.printStackTrace();
       }
@@ -68,6 +89,7 @@ public class RoomController implements Initializable {
    public void setHotelRoom(Hotel hotel, Room room) {
       this.hotel = hotel;
       this.room = room;
+      roomName.setText("Room " + this.room.getRoomId());
       
       try {
          ArrayList<String> features = new ArrayList<String>();
@@ -113,7 +135,7 @@ public class RoomController implements Initializable {
          connection.close();
          
          for (String feature : features)
-            featuresPanelPane.getChildren().add(new Label("• " + feature));
+            featuresPanelPane.getChildren().add(new FeaturePane(this.hotel, this.room, feature));
          for (Customer customer : customers)
             customerPanelPane.getChildren().add(new CustomerPane(customer));
          for (Payment payment : payments)

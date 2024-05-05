@@ -31,9 +31,6 @@ public class AddEmployeeController implements Initializable {
    private TextField employeeId;
    
    @FXML
-   private TextField hotelId;
-   
-   @FXML
    private TextField name;
    
    @FXML
@@ -66,7 +63,6 @@ public class AddEmployeeController implements Initializable {
    @FXML
    private void onSaveButtonClick(ActionEvent event) {
       if (employeeId.getText() == null || employeeId.getText().isEmpty() 
-            || hotelId.getText() == null || hotelId.getText().isEmpty()
             || name.getText() == null || name.getText().isEmpty() 
             || title.getText() == null || title.getText().isEmpty() 
             || email.getText() == null || email.getText().isEmpty()
@@ -83,8 +79,8 @@ public class AddEmployeeController implements Initializable {
          Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
          Statement statement = connection.createStatement();
          statement.executeUpdate("insert into Employee(EmployeeID, HotelID, LoginID, Name, Title, Email, PhoneNumber, Address) values (" 
-                  + employeeId.getText() + ", " + hotelId.getText() 
-                  + (systemAccess.isSelected() ? ", '" + loginId.getText() + "', '": ", null, '")
+                  + employeeId.getText() + ", " + hotel.getHotelId() 
+                  + (systemAccess.isSelected() ? ", '" + loginId.getText() + "', '" : ", null, '")
                   + name.getText() + "', '" + title.getText() + "', '" + email.getText() 
                   + "', '" + phoneNumber.getText() + "', '" + address.getText() + "')");
          statement.executeUpdate("INSERT INTO AuthenticationSystem (LoginID, Password) VALUES ('" + loginId.getText() 
@@ -115,9 +111,9 @@ public class AddEmployeeController implements Initializable {
          Scene scene = new Scene(root);
          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          
+         controller.setHotel(hotel);
          stage.setScene(scene);
          stage.show();
-         controller.setHotel(hotel);
       } catch (IOException e) {
          e.printStackTrace();
       }
@@ -134,8 +130,8 @@ public class AddEmployeeController implements Initializable {
       loginIdPane = new HBox(new Label("LoginID:"), loginId);
       loginPasswordPane = new HBox(new Label("Login Password:"), loginPassword);
       
-      loginIdPane.getStyleClass().add("text-field-pane");
-      loginPasswordPane.getStyleClass().add("text-field-pane");
+      loginIdPane.getStyleClass().add("prompt-pane");
+      loginPasswordPane.getStyleClass().add("prompt-pane");
       
       try {
          // Retrieve DB credentials

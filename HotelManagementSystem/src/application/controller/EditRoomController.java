@@ -5,12 +5,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
 import application.database.DatabaseConnection;
 import application.hotel.Hotel;
+import application.room.Room;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,63 +22,50 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class EditHotelController implements Initializable {
+public class EditRoomController implements Initializable {
    @FXML
-   private Label hotelName;
+   private TextField roomId;
    
    @FXML
-   private TextField hotelId;
+   private TextField price;
    
    @FXML
-   private TextField name;
+   private VBox inputFieldPanelPane;
    
    @FXML
-   private TextField phoneNumber;
-   
-   @FXML
-   private TextField streetAddress;
-   
-   @FXML
-   private TextField city;
-   
-   @FXML
-   private TextField country;
+   private Label roomName;
    
    private String dbUrl;
    private String dbUser;
    private String dbPassword;
    private Hotel hotel;
+   private Room room;
    
    @FXML
    private void onSaveButtonClick(ActionEvent event) {
-      if (hotelId.getText() == null || hotelId.getText().isEmpty() 
-            || name.getText() == null || name.getText().isEmpty()
-            || phoneNumber.getText() == null || phoneNumber.getText().isEmpty()
-            || streetAddress.getText() == null || streetAddress.getText().isEmpty() 
-            || city.getText() == null || city.getText().isEmpty() 
-            || country.getText() == null || country.getText().isEmpty())
+      if (roomId.getText() == null || roomId.getText().isEmpty() 
+            || price.getText() == null || price.getText().isEmpty())
          return;
       
       try {
          Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
          Statement statement = connection.createStatement();
-         statement.executeUpdate("update Hotel set HotelID = " + hotelId.getText() 
-               + ", Name = '" + name.getText() + "', PhoneNumber = '" + phoneNumber.getText() 
-               + "', City = '" + city.getText() + "', Country = '" + country.getText() 
-               + "' where HotelID = " + hotel.getHotelId());
-         statement.executeUpdate("update Amenities set HotelID = " + hotelId.getText() 
-               + " where HotelId = " + hotel.getHotelId());
-         statement.executeUpdate("update Room set HotelID = " + hotelId.getText() 
-               + " where HotelID = " + hotel.getHotelId());
-         statement.executeUpdate("update Employee set HotelID = " + hotelId.getText() 
-               + " where HotelID = " + hotel.getHotelId());
+         statement.executeUpdate("update Room set RoomID = " + roomId.getText() 
+               + ", Price = " + price.getText() + " where RoomID = " + room.getRoomId());
+         statement.executeUpdate("Update Features set RoomID = " + roomId.getText() 
+               + " where RoomID = " + room.getRoomId());
+         statement.executeUpdate("update Customer set RoomID = " + roomId.getText() 
+               + " where RoomID = " + room.getRoomId());
+         statement.executeUpdate("update Payment set RoomID = " + roomId.getText() 
+               + " where RoomID = " + room.getRoomId());
          connection.close();
          
          // Return to home
          onBackButtonClick(event);
-      } catch (Exception e) {
+      } catch (SQLException e) {
          e.printStackTrace();
       }
    }
@@ -84,25 +73,26 @@ public class EditHotelController implements Initializable {
    @FXML
    private void onBackButtonClick(ActionEvent event) {
       try {
-         Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/hotel.fxml"));
+         Parent root = loader.load();
+         HotelController controller = loader.getController();
          Scene scene = new Scene(root);
          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+         
+         controller.setHotel(hotel);
          stage.setScene(scene);
          stage.show();
-      } catch (Exception e) {
+      } catch (IOException e) {
          e.printStackTrace();
       }
    }
    
-   public void setHotel(Hotel hotel) {
+   public void setHotelRoom(Hotel hotel, Room room) {
       this.hotel = hotel;
-      hotelName.setText(this.hotel.getName());
-      hotelId.setText(Integer.toString(this.hotel.getHotelId()));
-      name.setText(this.hotel.getName());
-      phoneNumber.setText(this.hotel.getPhoneNumber());
-      streetAddress.setText(this.hotel.getStreetAddress());
-      city.setText(this.hotel.getCity());
-      country.setText(this.hotel.getCountry());
+      this.room = room;
+      roomName.setText("Room " + this.room.getRoomId());
+      roomId.setText(Integer.toString(this.room.getRoomId()));
+      price.setText(Double.toString(this.room.getPrice()));
    }
    
    @Override
