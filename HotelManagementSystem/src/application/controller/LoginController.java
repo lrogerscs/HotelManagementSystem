@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import javafx.scene.control.Alert;
+
 import application.SimpleSubstitutionCipher;
 import application.database.DatabaseConnection;
 import javafx.event.ActionEvent;
@@ -82,54 +82,32 @@ public class LoginController implements Initializable {
          e.printStackTrace();
       }
    }
+
    private boolean isValidLogin(String loginUser, String loginPassword) {
-	    boolean valid = false;
-	    boolean correctPassword = false;
+      boolean valid = false;
 
-	    // Check if login exists in table
-	    try {
-	        Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
-	        Statement statement = connection.createStatement();
+      String encryptedPassword = SimpleSubstitutionCipher.encrypt(loginPassword);
+      // Check if login exists in table
+      try {
+         Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
+         Statement statement = connection.createStatement();
+         String decryptedPassword = SimpleSubstitutionCipher.decrypt(encryptedPassword);
+         ResultSet resultSet = statement.executeQuery("select LoginID, Password from AuthenticationSystem "
+               + "where LoginID = '" + loginUser + "' and Password = '" + loginPassword + "'");
+         if (resultSet.isBeforeFirst()) {
+            loggedInUser = loginUser;
+            valid = true;
+         }
+         if (decryptedPassword == loginPassword) {
+            valid = true;
+         }
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
 
-	        ResultSet resultSet = statement.executeQuery("SELECT LoginID, Password FROM AuthenticationSystem "
-	                + "WHERE LoginID = '" + loginUser + "'");
-	        
-	        if (resultSet.isBeforeFirst()) {
-	            // User exists, now check password
-	            while (resultSet.next()) {
-	                String storedPassword = resultSet.getString("Password");
-	                if (loginPassword.equals(SimpleSubstitutionCipher.decrypt(storedPassword))) {
-	                    correctPassword = true;
-	                    loggedInUser = loginUser;
-	                    break;
-	                }
-	            }
-	            if (correctPassword) {
-	                valid = true;
-	            } else {
-	                // Password is incorrect
-	                showAlert(Alert.AlertType.ERROR, "Incorrect Password", "The password you entered is incorrect. Please try again.");
-	            }
-	        } else {
-	            // User not found
-	            showAlert(Alert.AlertType.ERROR, "User Not Found", "The user does not exist.");
-	        }
+      return valid;
+   }
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-
-	    return valid;
-	}
-
-	private void showAlert(Alert.AlertType alertType, String title, String message) {
-	    Alert alert = new Alert(alertType);
-	    alert.setTitle(title);
-	    alert.setHeaderText(null);
-	    alert.setContentText(message);
-	    alert.showAndWait();
-	}
-	
    @Override
    public void initialize(URL location, ResourceBundle resources) {
       try {

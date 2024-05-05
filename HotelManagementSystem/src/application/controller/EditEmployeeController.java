@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import application.SimpleSubstitutionCipher;
+
 import application.database.DatabaseConnection;
 import application.employee.Employee;
 import application.hotel.Hotel;
@@ -30,10 +30,10 @@ import javafx.stage.Stage;
 
 public class EditEmployeeController implements Initializable {
    @FXML
-   private TextField employeeId;
+   private Label employeeName;
    
    @FXML
-   private TextField hotelId;
+   private TextField employeeId;
    
    @FXML
    private TextField name;
@@ -68,58 +68,54 @@ public class EditEmployeeController implements Initializable {
    
    @FXML
    private void onSaveButtonClick(ActionEvent event) {
-       if (employeeId.getText() == null || employeeId.getText().isEmpty() 
-               || hotelId.getText() == null || hotelId.getText().isEmpty()
-               || loginId.getText() == null || loginId.getText().isEmpty()
-               || name.getText() == null || name.getText().isEmpty() 
-               || title.getText() == null || title.getText().isEmpty() 
-               || email.getText() == null || email.getText().isEmpty()
-               || phoneNumber.getText() == null || phoneNumber.getText().isEmpty()
-               || address.getText() == null || address.getText().isEmpty())
-           return;
-
-       // If employee has system access, check if login fields are empty
-       if (systemAccess.isSelected() && (loginId.getText() == null || loginId.getText().isEmpty() 
-               || loginPassword.getText() == null || loginPassword.getText().isEmpty()))
-           return;
-
-       try {
-           Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
-           Statement statement = connection.createStatement();
-           statement.executeUpdate("UPDATE Employee SET EmployeeID = " + employeeId.getText() 
-               + ", HotelID = " + hotelId.getText() 
-               + (systemAccess.isSelected() ? ", LoginID = '" + loginId.getText() + "', Name = '" : ", LoginID = null, '")
-               + "', Name = '" + name.getText() + "', Title = '" + title.getText() 
+      if (employeeId.getText() == null || employeeId.getText().isEmpty() 
+            || loginId.getText() == null || loginId.getText().isEmpty()
+            || name.getText() == null || name.getText().isEmpty() 
+            || title.getText() == null || title.getText().isEmpty() 
+            || email.getText() == null || email.getText().isEmpty()
+            || phoneNumber.getText() == null || phoneNumber.getText().isEmpty()
+            || address.getText() == null || address.getText().isEmpty())
+         return;
+      
+      // If employee has system access, check if login fields are empty
+      if (systemAccess.isSelected() && (loginId.getText() == null || loginId.getText().isEmpty() 
+            || loginPassword.getText() == null || loginPassword.getText().isEmpty()))
+         return;
+      
+      try {
+         Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
+         Statement statement = connection.createStatement();
+         statement.executeUpdate("update Employee set EmployeeID = " + employeeId.getText() 
+               + ", HotelID = " + hotel.getHotelId() 
+               + (systemAccess.isSelected() ? ", LoginID = '" + loginId.getText() + "', Name = '" : ", LoginID = null, Name = '")
+               + name.getText() + "', Title = '" + title.getText() 
                + "', Email = '" + email.getText() + "', PhoneNumber = '" + phoneNumber.getText() 
                + "', Address = '" + address.getText() 
-               + "' WHERE EmployeeID = " + employee.getEmployeeId());
+               + "' where EmployeeID = " + employee.getEmployeeId());
+         if (systemAccess.isSelected()) {
+            // Check if the login ID already exists in the AuthenticationSystem table
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM AuthenticationSystem WHERE LoginID = '" + loginId.getText() + "'");
 
-           if (systemAccess.isSelected()) {
-               String encryptedPassword = SimpleSubstitutionCipher.encrypt(loginPassword.getText());
-               try {
-                   // Check if the login ID already exists in the AuthenticationSystem table
-                   ResultSet resultSet = statement.executeQuery("SELECT * FROM AuthenticationSystem WHERE LoginID = '" + loginId.getText() + "'");
-                   
-                   if (resultSet.next()) {
-                       // If the login ID exists, update the password
-                       statement.executeUpdate("UPDATE AuthenticationSystem SET Password = '" + encryptedPassword + "' WHERE LoginID = '" + loginId.getText() + "'");
-                   } else {
-                       // If the login ID doesn't exist, insert a new entry
-                       statement.executeUpdate("INSERT INTO AuthenticationSystem (LoginID, Password) VALUES ('" + loginId.getText() + "', '" + encryptedPassword + "')");
-                   }
-                   
-                   connection.close();
-               } catch (SQLException e) {
-                   e.printStackTrace();
-               }
-           } 
-           connection.close();
-           
-           // Return to home
-           onBackButtonClick(event);
-       } catch (SQLException e) {
-           e.printStackTrace();
-       }
+            if (resultSet.next()) {
+               // If the login ID exists, update the password
+               statement.executeUpdate("UPDATE AuthenticationSystem SET Password = '" + loginPassword.getText()
+                     + "' WHERE LoginID = '" + loginId.getText() + "'");
+            } else {
+               // If the login ID doesn't exist, insert a new entry
+               statement.executeUpdate("INSERT INTO AuthenticationSystem (LoginID, Password) VALUES ('"
+                     + loginId.getText() + "', '" + loginPassword.getText() + "')");
+            }
+         } else {
+            if (employee.getLoginId() != null)
+               statement.executeUpdate("delete from AuthenticationSystem where LoginID = '" + employee.getLoginId() + "'");
+         }
+         connection.close();
+         
+         // Return to home
+         onBackButtonClick(event);
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
    }
    
    @FXML
@@ -139,9 +135,9 @@ public class EditEmployeeController implements Initializable {
          Scene scene = new Scene(root);
          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          
+         controller.setHotel(hotel);
          stage.setScene(scene);
          stage.show();
-         controller.setHotel(hotel);
       } catch (IOException e) {
          e.printStackTrace();
       }
@@ -150,8 +146,8 @@ public class EditEmployeeController implements Initializable {
    public void setHotelEmployee(Hotel hotel, Employee employee) {
       this.hotel = hotel;
       this.employee = employee;
+      employeeName.setText(this.employee.getName());
       employeeId.setText(Integer.toString(this.employee.getEmployeeId()));
-      hotelId.setText(Integer.toString(this.employee.getHotelId()));
       name.setText(this.employee.getName());
       title.setText(this.employee.getTitle());
       email.setText(this.employee.getEmail());
@@ -169,8 +165,7 @@ public class EditEmployeeController implements Initializable {
             ResultSet resultSet = statement.executeQuery("select Password from AuthenticationSystem where LoginID = '" 
                      + this.employee.getLoginId() + "'");
             resultSet.next();
-            String encryptedPassword = SimpleSubstitutionCipher.encrypt(resultSet.getString(1));
-            loginPassword.setText(encryptedPassword);
+            loginPassword.setText(resultSet.getString(1));
             connection.close();
          } catch (SQLException e) {
             e.printStackTrace();
@@ -186,8 +181,8 @@ public class EditEmployeeController implements Initializable {
          loginIdPane = new HBox(new Label("LoginID:"), loginId);
          loginPasswordPane = new HBox(new Label("Login Password:"), loginPassword);
          
-         loginIdPane.getStyleClass().add("text-field-pane");
-         loginPasswordPane.getStyleClass().add("text-field-pane");
+         loginIdPane.getStyleClass().add("prompt-pane");
+         loginPasswordPane.getStyleClass().add("prompt-pane");
          
          // Retrieve DB credentials
          Properties properties = new Properties();

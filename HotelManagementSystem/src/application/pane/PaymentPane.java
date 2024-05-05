@@ -11,11 +11,11 @@ public class PaymentPane extends VBox {
    
    public PaymentPane(Payment payment) {
       this.payment = payment;
-      paymentId = new Label("Payment " + Integer.toString(this.payment.getPaymentId()));
-      customerId = new Label("Customer Number: " + Integer.toString(this.payment.getCustomerId()));
+      paymentId = new Label("Payment " + this.payment.getPaymentId());
+      customerId = new Label("Customer Number: " + this.payment.getCustomerId());
       method = new Label("Payment Method: " + this.payment.getMethod());
-      amount = new Label("Amount: $" + Double.toString(this.payment.getAmount()));
-      date = new Label("Payment Date: " + this.payment.getPayDate().toString());
+      amount = new Label("Amount: $" + this.payment.getAmount());
+      date = new Label("Payment Date: " + this.payment.getPayDate());
       titlePane = new VBox();
       descPane = new VBox();
       

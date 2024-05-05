@@ -10,6 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -18,7 +19,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
-import application.SimpleSubstitutionCipher;
 
 public class ChangePasswordController {
 
@@ -40,42 +40,39 @@ public class ChangePasswordController {
 	private String dbUser;
 	private String dbPassword;
 
-	@FXML
-	private void onChangePasswordButtonClick(ActionEvent event) {
-	    String username = usernameField.getText();
-	    String oldPassword = oldPasswordField.getText();
-	    String newPassword = newPasswordField.getText();
+    @FXML
+    private void onChangePasswordButtonClick(ActionEvent event) {
+        String username = usernameField.getText();
+        String oldPassword = oldPasswordField.getText();
+        String newPassword = newPasswordField.getText();
 
-	    if (username.isEmpty() || oldPassword.isEmpty() || newPassword.isEmpty()) {
-	        messageText.setText("Please fill in all fields.");
-	        return;
-	    }
-	    
-	    initialize();
+        if (username.isEmpty() || oldPassword.isEmpty() || newPassword.isEmpty()) {
+            messageText.setText("Please fill in all fields.");
+            return;
+        }
+        
+        initialize();
 
-	    try {
-	        Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
-	        Statement statement = connection.createStatement();
-	        ResultSet resultSet = statement.executeQuery("SELECT Password FROM Authenticationsystem WHERE LoginID='" + username + "'");
-	        if (resultSet.next()) {
-	        	System.out.println();
-	            String storedPassword = SimpleSubstitutionCipher.decrypt(resultSet.getString("Password"));
-	            String encryptedNewPassword = SimpleSubstitutionCipher.encrypt(newPassword);
-	            
-	            if (oldPassword.equals(storedPassword)) {
-	                statement.executeUpdate("UPDATE Authenticationsystem SET Password='" + encryptedNewPassword + 
-	                		"' WHERE LoginID='" + username + "'");
-	                messageText.setText("Password changed successfully.");
-	            } else {
-	                messageText.setText("Incorrect old password.");
-	            }
-	        } else {
-	            messageText.setText("User not found.");
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	}
+        try {
+            Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT Password FROM Authenticationsystem WHERE LoginID='" + username + "'");
+            if (resultSet.next()) {
+                String storedPassword = resultSet.getString("Password");
+                
+                if (oldPassword.equals(storedPassword)) {
+                    statement.executeUpdate("UPDATE Authenticationsystem SET Password='" + newPassword + "' WHERE LoginID='" + username + "'");
+                    messageText.setText("Password changed successfully.");
+                } else {
+                    messageText.setText("Incorrect old password.");
+                }
+            } else {
+                messageText.setText("User not found.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private void onBackButtonClick(ActionEvent event) {

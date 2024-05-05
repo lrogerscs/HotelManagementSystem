@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.ResourceBundle;
+
 import application.database.DatabaseConnection;
 import application.hotel.Hotel;
 import application.pane.HotelPane;
@@ -22,13 +23,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 public class HomeController implements Initializable {
 	   
    @FXML
-   private VBox hotelPanelPane;
+   private FlowPane hotelPanelPane;
    
    @FXML
    private Label usernameLabel; 
