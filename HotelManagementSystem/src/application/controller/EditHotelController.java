@@ -18,14 +18,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class EditHotelController implements Initializable {
-   @FXML
-   private Label hotelName;
-   
    @FXML
    private TextField hotelId;
    
@@ -71,7 +67,7 @@ public class EditHotelController implements Initializable {
          statement.executeUpdate("update Room set HotelID = " + hotelId.getText() 
                + " where HotelID = " + hotel.getHotelId());
          statement.executeUpdate("update Employee set HotelID = " + hotelId.getText() 
-               + " where HotelID = " + hotel.getHotelId());
+               + "where HotelID = " + hotel.getHotelId());
          connection.close();
          
          // Return to home
@@ -96,7 +92,6 @@ public class EditHotelController implements Initializable {
    
    public void setHotel(Hotel hotel) {
       this.hotel = hotel;
-      hotelName.setText(this.hotel.getName());
       hotelId.setText(Integer.toString(this.hotel.getHotelId()));
       name.setText(this.hotel.getName());
       phoneNumber.setText(this.hotel.getPhoneNumber());

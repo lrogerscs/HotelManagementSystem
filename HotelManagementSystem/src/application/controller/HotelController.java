@@ -16,7 +16,6 @@ import java.util.ResourceBundle;
 import application.database.DatabaseConnection;
 import application.employee.Employee;
 import application.hotel.Hotel;
-import application.pane.AmenityPane;
 import application.pane.EmployeePane;
 import application.pane.RoomPane;
 import application.room.Room;
@@ -28,8 +27,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class HotelController implements Initializable {
@@ -37,52 +36,15 @@ public class HotelController implements Initializable {
    private HBox amenitiesPanelPane;
    
    @FXML
-   private FlowPane employeePanelPane;
+   private VBox employeePanelPane;
    
    @FXML
-   private FlowPane roomPanelPane;
-   
-   @FXML
-   private Label hotelName;
+   private VBox roomPanelPane;
    
    private Hotel hotel;
    private String dbUrl;
    private String dbUser;
    private String dbPassword;
-   
-   @FXML
-   private void onAddAmenityButtonClick(ActionEvent event) {
-      try {
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/add_amenity.fxml"));
-         Parent root = loader.load();
-         AddAmenityController controller = loader.getController();
-         Scene scene = new Scene(root);
-         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-         
-         controller.setHotel(hotel);
-         stage.setScene(scene);
-         stage.show();
-      } catch (IOException e) {
-         e.printStackTrace();
-      }
-   }
-   
-   @FXML
-   private void onAddRoomButtonClick(ActionEvent event) {
-      try {
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/add_room.fxml"));
-         Parent root = loader.load();
-         AddRoomController controller = loader.getController();
-         Scene scene = new Scene(root);
-         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-         
-         controller.setHotel(hotel);
-         stage.setScene(scene);
-         stage.show();
-      } catch (IOException e) {
-         e.printStackTrace();
-      }
-   }
    
    @FXML
    private void onAddEmployeeButtonClick(ActionEvent event) {
@@ -93,9 +55,9 @@ public class HotelController implements Initializable {
          Scene scene = new Scene(root);
          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          
-         controller.setHotel(hotel);
          stage.setScene(scene);
          stage.show();
+         controller.setHotel(hotel);
       } catch (IOException e) {
          e.printStackTrace();
       }
@@ -116,7 +78,6 @@ public class HotelController implements Initializable {
    
    public void setHotel(Hotel hotel) {
       this.hotel = hotel;
-      hotelName.setText(this.hotel.getName());
       
       try {
          ArrayList<String> amenities = new ArrayList<String>();
@@ -150,7 +111,7 @@ public class HotelController implements Initializable {
          while (resultSet.next()) {
             int roomId = resultSet.getInt(1);
             int hotelId = resultSet.getInt(2);
-            Integer customerId = (Integer) resultSet.getObject(3);
+            int customerId = resultSet.getInt(3);
             double price = resultSet.getDouble(4);
             Date date = resultSet.getDate(5);
             
@@ -160,7 +121,7 @@ public class HotelController implements Initializable {
          connection.close();
          
          for (String amenity : amenities)
-            amenitiesPanelPane.getChildren().add(new AmenityPane(this.hotel, amenity));
+            amenitiesPanelPane.getChildren().add(new Label("• " + amenity));
          for (Employee employee : employees)
             employeePanelPane.getChildren().add(new EmployeePane(this.hotel, employee));
          for (Room room : rooms)

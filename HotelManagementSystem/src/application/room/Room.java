@@ -5,11 +5,11 @@ import java.util.Date;
 public class Room {
    private int roomId;
    private int hotelId;
-   private Integer customerId;
+   private int customerId;
    private double price;
    private Date date;
    
-   public Room(int roomId, int hotelId, Integer customerId, double price, Date date) {
+   public Room(int roomId, int hotelId, int customerId, double price, Date date) {
       this.roomId = roomId;
       this.hotelId = hotelId;
       this.customerId = customerId;
@@ -25,7 +25,7 @@ public class Room {
       return hotelId;
    }
    
-   public Integer getCustomerId() {
+   public int getCustomerId() {
       return customerId;
    }
    

@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.ResourceBundle;
-
+import application.SimpleSubstitutionCipher;
 import application.database.DatabaseConnection;
 import application.hotel.Hotel;
 import javafx.event.ActionEvent;
@@ -29,6 +29,9 @@ import javafx.stage.Stage;
 public class AddEmployeeController implements Initializable {
    @FXML
    private TextField employeeId;
+   
+   @FXML
+   private TextField hotelId;
    
    @FXML
    private TextField name;
@@ -62,36 +65,42 @@ public class AddEmployeeController implements Initializable {
    
    @FXML
    private void onSaveButtonClick(ActionEvent event) {
-      if (employeeId.getText() == null || employeeId.getText().isEmpty() 
-            || name.getText() == null || name.getText().isEmpty() 
-            || title.getText() == null || title.getText().isEmpty() 
-            || email.getText() == null || email.getText().isEmpty()
-            || phoneNumber.getText() == null || phoneNumber.getText().isEmpty()
-            || address.getText() == null || address.getText().isEmpty())
-         return;
-      
-      // If employee has system access, check if login fields are empty
-      if (systemAccess.isSelected() && (loginId.getText() == null || loginId.getText().isEmpty() 
-            || loginPassword.getText() == null || loginPassword.getText().isEmpty()))
-         return;
-      
-      try {
-         Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
-         Statement statement = connection.createStatement();
-         statement.executeUpdate("insert into Employee(EmployeeID, HotelID, LoginID, Name, Title, Email, PhoneNumber, Address) values (" 
-                  + employeeId.getText() + ", " + hotel.getHotelId() 
-                  + (systemAccess.isSelected() ? ", '" + loginId.getText() + "', '" : ", null, '")
-                  + name.getText() + "', '" + title.getText() + "', '" + email.getText() 
-                  + "', '" + phoneNumber.getText() + "', '" + address.getText() + "')");
-         statement.executeUpdate("INSERT INTO AuthenticationSystem (LoginID, Password) VALUES ('" + loginId.getText() 
-         			+ "', '" + loginPassword.getText() + "')");
-         connection.close();
-         
-         // Return to home
-         onBackButtonClick(event);
-      } catch (SQLException e) {
-         e.printStackTrace();
-      }
+       if (employeeId.getText() == null || employeeId.getText().isEmpty() 
+               || hotelId.getText() == null || hotelId.getText().isEmpty()
+               || name.getText() == null || name.getText().isEmpty() 
+               || title.getText() == null || title.getText().isEmpty() 
+               || email.getText() == null || email.getText().isEmpty()
+               || phoneNumber.getText() == null || phoneNumber.getText().isEmpty()
+               || address.getText() == null || address.getText().isEmpty())
+           return;
+
+       // If employee has system access, check if login fields are empty
+       if (systemAccess.isSelected() && (loginId.getText() == null || loginId.getText().isEmpty() 
+               || loginPassword.getText() == null || loginPassword.getText().isEmpty()))
+           return;
+
+       try {
+           Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
+           Statement statement = connection.createStatement();
+           
+           String encryptedPassword = SimpleSubstitutionCipher.encrypt(loginPassword.getText());
+           
+           statement.executeUpdate("INSERT INTO Employee(EmployeeID, HotelID, LoginID, Name, Title, Email, PhoneNumber, Address) VALUES (" 
+               + employeeId.getText() + ", " + hotelId.getText() 
+               + (systemAccess.isSelected() ? ", '" + loginId.getText() + "', '": ", null, '")
+               + name.getText() + "', '" + title.getText() + "', '" + email.getText() 
+               + "', '" + phoneNumber.getText() + "', '" + address.getText() + "')");
+           
+           statement.executeUpdate("INSERT INTO AuthenticationSystem (LoginID, Password) VALUES ('" + loginId.getText() 
+               + "', '" + encryptedPassword + "')");
+           
+           connection.close();
+           
+           // Return to home
+           onBackButtonClick(event);
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
    }
    
    @FXML
@@ -111,9 +120,9 @@ public class AddEmployeeController implements Initializable {
          Scene scene = new Scene(root);
          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          
-         controller.setHotel(hotel);
          stage.setScene(scene);
          stage.show();
+         controller.setHotel(hotel);
       } catch (IOException e) {
          e.printStackTrace();
       }
@@ -130,8 +139,8 @@ public class AddEmployeeController implements Initializable {
       loginIdPane = new HBox(new Label("LoginID:"), loginId);
       loginPasswordPane = new HBox(new Label("Login Password:"), loginPassword);
       
-      loginIdPane.getStyleClass().add("prompt-pane");
-      loginPasswordPane.getStyleClass().add("prompt-pane");
+      loginIdPane.getStyleClass().add("text-field-pane");
+      loginPasswordPane.getStyleClass().add("text-field-pane");
       
       try {
          // Retrieve DB credentials

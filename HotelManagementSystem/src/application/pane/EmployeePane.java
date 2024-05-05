@@ -52,9 +52,6 @@ public class EmployeePane extends VBox {
       delete.setOnAction(event -> deleteEmployee(event));
       
       getChildren().addAll(titlePane, descPane, buttonPane);
-      
-      edit.getStyleClass().add("edit-button");
-      delete.getStyleClass().add("delete-button");
 
       titlePane.getStyleClass().add("title-pane");
       descPane.getStyleClass().add("desc-pane");
@@ -70,9 +67,9 @@ public class EmployeePane extends VBox {
          Scene scene = new Scene(root);
          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-         controller.setHotelEmployee(hotel, employee);
          stage.setScene(scene);
          stage.show();
+         controller.setHotelEmployee(hotel, employee);
       } catch (IOException e) {
          e.printStackTrace();
       }
@@ -94,7 +91,7 @@ public class EmployeePane extends VBox {
          
          statement.executeUpdate("delete from Employee where EmployeeID = " + employee.getEmployeeId());
          if (employee.getLoginId() != null)
-            statement.executeUpdate("delete from AuthenticationSystem where LoginID = '" + employee.getLoginId() + "'");
+            statement.executeUpdate("delete from AuthenticationSystem where LoginID = " + employee.getEmployeeId());
          
          connection.close();
          
@@ -105,9 +102,9 @@ public class EmployeePane extends VBox {
          Scene scene = new Scene(root);
          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-         controller.setHotel(hotel);
          stage.setScene(scene);
          stage.show();
+         controller.setHotel(hotel);
       } catch (IOException e) {
          e.printStackTrace();
       } catch (SQLException e) {

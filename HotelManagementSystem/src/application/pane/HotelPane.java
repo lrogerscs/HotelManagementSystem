@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
@@ -53,9 +52,6 @@ public class HotelPane extends VBox {
       buttonPane.getChildren().addAll(details, edit, delete);
       getChildren().addAll(titlePane, descPane, buttonPane);
       
-      edit.getStyleClass().add("edit-button");
-      delete.getStyleClass().add("delete-button");
-      
       titlePane.getStyleClass().add("title-pane");
       descPane.getStyleClass().add("desc-pane");
       buttonPane.getStyleClass().add("button-pane");
@@ -70,9 +66,9 @@ public class HotelPane extends VBox {
          Scene scene = new Scene(root);
          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          
-         controller.setHotel(hotel);
          stage.setScene(scene);
          stage.show();
+         controller.setHotel(hotel);
       } catch (IOException e) {
          e.printStackTrace();
       }
@@ -86,9 +82,9 @@ public class HotelPane extends VBox {
          Scene scene = new Scene(root);
          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          
-         controller.setHotel(hotel);
          stage.setScene(scene);
          stage.show();
+         controller.setHotel(hotel);
       } catch (IOException e) {
          e.printStackTrace();
       }
@@ -109,29 +105,8 @@ public class HotelPane extends VBox {
          Statement statement = connection.createStatement();
          statement.executeUpdate("delete from Hotel where HotelID = " + hotel.getHotelId());
          statement.executeUpdate("delete from Amenities where HotelID = " + hotel.getHotelId());
-         
-         // Delete employees and associated data
-         ResultSet resultSet = statement.executeQuery("select EmployeeID, LoginID from Employee where HotelID = " + hotel.getHotelId());
-         while (resultSet.next()) {
-            int employeeId = resultSet.getInt(1);
-            String loginId = resultSet.getString(2);
-            
-            statement.executeUpdate("delete from Employee where EmployeeID = " + employeeId);
-            if (loginId != null)
-               statement.executeUpdate("delete from AuthenticationSystem where LoginID = " + loginId);
-         }
-         
-         // Delete rooms and associated data
-         resultSet = statement.executeQuery("select RoomID from Room where HotelID = " + hotel.getHotelId());
-         while (resultSet.next()) {
-            int roomId = resultSet.getInt(1);
-            
-            statement.executeUpdate("delete from Room where RoomID = " + roomId);
-            statement.executeUpdate("delete from Features where RoomID = " + roomId);
-            statement.executeUpdate("delete from Customer where RoomID = " + roomId);
-            statement.executeUpdate("delete from Payment where RoomID = " + roomId);
-         }
-         
+         statement.executeUpdate("delete from Room where HotelID = " + hotel.getHotelId());
+         statement.executeUpdate("delete from Employee where HotelID = " + hotel.getHotelId());
          connection.close();
          
          // Reload home
