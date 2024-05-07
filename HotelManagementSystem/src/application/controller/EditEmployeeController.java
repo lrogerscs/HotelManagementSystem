@@ -94,23 +94,20 @@ public class EditEmployeeController implements Initializable {
                + "' where EmployeeID = " + employee.getEmployeeId());
          if (systemAccess.isSelected()) {
              String encryptedPassword = SimpleSubstitutionCipher.encrypt(loginPassword.getText());
-             try {
-                 // Check if the login ID already exists in the AuthenticationSystem table
-                 ResultSet resultSet = statement.executeQuery("SELECT * FROM AuthenticationSystem WHERE LoginID = '" + loginId.getText() + "'");
-                 
-                 if (resultSet.next()) {
-                     // If the login ID exists, update the password
-                     statement.executeUpdate("UPDATE AuthenticationSystem SET Password = '" + encryptedPassword + "' WHERE LoginID = '" + loginId.getText() + "'");
-                 } else {
-                     // If the login ID doesn't exist, insert a new entry
-                     statement.executeUpdate("INSERT INTO AuthenticationSystem (LoginID, Password) VALUES ('" + loginId.getText() + "', '" + encryptedPassword + "')");
-                 }
-                 
-                 connection.close();
-             } catch (SQLException e) {
-                 e.printStackTrace();
+             
+             // Check if the login ID already exists in the AuthenticationSystem table
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM AuthenticationSystem WHERE LoginID = '" + loginId.getText() + "'");
+             
+             if (resultSet.next()) {
+                 // If the login ID exists, update the password
+                 statement.executeUpdate("UPDATE AuthenticationSystem SET Password = '" + encryptedPassword + "' WHERE LoginID = '" + loginId.getText() + "'");
+             } else {
+                 // If the login ID doesn't exist, insert a new entry
+                 statement.executeUpdate("INSERT INTO AuthenticationSystem (LoginID, Password) VALUES ('" + loginId.getText() + "', '" + encryptedPassword + "')");
              }
-         } 
+         } else {
+            statement.executeUpdate("delete from AuthenticationSystem where LoginID = '" + loginId.getText() + "'");
+         }
          connection.close();
          
          // Return to home

@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import application.controller.EditHotelController;
@@ -111,22 +112,27 @@ public class HotelPane extends VBox {
          statement.executeUpdate("delete from Amenities where HotelID = " + hotel.getHotelId());
          
          // Delete employees and associated data
-         ResultSet resultSet = statement.executeQuery("select EmployeeID, LoginID from Employee where HotelID = " + hotel.getHotelId());
-         while (resultSet.next()) {
-            int employeeId = resultSet.getInt(1);
-            String loginId = resultSet.getString(2);
-            
-            statement.executeUpdate("delete from Employee where EmployeeID = " + employeeId);
+         ResultSet resultSet = statement.executeQuery("select LoginID from Employee where HotelID = " + hotel.getHotelId());
+         ArrayList<String> loginIds = new ArrayList<String>();
+         
+         while (resultSet.next())
+            loginIds.add(resultSet.getString(1));
+         
+         statement.executeUpdate("delete from Employee where HotelID = " + hotel.getHotelId());
+         for (String loginId : loginIds) {
             if (loginId != null)
-               statement.executeUpdate("delete from AuthenticationSystem where LoginID = " + loginId);
+               statement.executeUpdate("delete from AuthenticationSystem where LoginID = '" + loginId + "'");
          }
          
          // Delete rooms and associated data
          resultSet = statement.executeQuery("select RoomID from Room where HotelID = " + hotel.getHotelId());
-         while (resultSet.next()) {
-            int roomId = resultSet.getInt(1);
-            
-            statement.executeUpdate("delete from Room where RoomID = " + roomId);
+         ArrayList<Integer> roomIds = new ArrayList<Integer>();
+         
+         while (resultSet.next())
+            roomIds.add(resultSet.getInt(1));
+         
+         statement.executeUpdate("delete from Room where HotelID = " + hotel.getHotelId());
+         for (int roomId : roomIds) {
             statement.executeUpdate("delete from Features where RoomID = " + roomId);
             statement.executeUpdate("delete from Customer where RoomID = " + roomId);
             statement.executeUpdate("delete from Payment where RoomID = " + roomId);
