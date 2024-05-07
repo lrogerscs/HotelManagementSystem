@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.ResourceBundle;
-
+import application.SimpleSubstitutionCipher;
 import application.database.DatabaseConnection;
 import application.hotel.Hotel;
 import javafx.event.ActionEvent;
@@ -78,13 +78,16 @@ public class AddEmployeeController implements Initializable {
       try {
          Connection connection = DatabaseConnection.getDatabaseConnection(dbUrl, dbUser, dbPassword);
          Statement statement = connection.createStatement();
+         
+         String encryptedPassword = SimpleSubstitutionCipher.encrypt(loginPassword.getText());
+         
          statement.executeUpdate("insert into Employee(EmployeeID, HotelID, LoginID, Name, Title, Email, PhoneNumber, Address) values (" 
                   + employeeId.getText() + ", " + hotel.getHotelId() 
                   + (systemAccess.isSelected() ? ", '" + loginId.getText() + "', '" : ", null, '")
                   + name.getText() + "', '" + title.getText() + "', '" + email.getText() 
                   + "', '" + phoneNumber.getText() + "', '" + address.getText() + "')");
          statement.executeUpdate("INSERT INTO AuthenticationSystem (LoginID, Password) VALUES ('" + loginId.getText() 
-         			+ "', '" + loginPassword.getText() + "')");
+         			+ "', '" + encryptedPassword + "')");
          connection.close();
          
          // Return to home

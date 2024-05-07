@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.ResourceBundle;
-
+import application.SimpleSubstitutionCipher;
 import application.database.DatabaseConnection;
 import application.employee.Employee;
 import application.hotel.Hotel;
@@ -93,30 +93,32 @@ public class EditEmployeeController implements Initializable {
                + "', Address = '" + address.getText() 
                + "' where EmployeeID = " + employee.getEmployeeId());
          if (systemAccess.isSelected()) {
-            // Check if the login ID already exists in the AuthenticationSystem table
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM AuthenticationSystem WHERE LoginID = '" + loginId.getText() + "'");
-
-            if (resultSet.next()) {
-               // If the login ID exists, update the password
-               statement.executeUpdate("UPDATE AuthenticationSystem SET Password = '" + loginPassword.getText()
-                     + "' WHERE LoginID = '" + loginId.getText() + "'");
-            } else {
-               // If the login ID doesn't exist, insert a new entry
-               statement.executeUpdate("INSERT INTO AuthenticationSystem (LoginID, Password) VALUES ('"
-                     + loginId.getText() + "', '" + loginPassword.getText() + "')");
-            }
-         } else {
-            if (employee.getLoginId() != null)
-               statement.executeUpdate("delete from AuthenticationSystem where LoginID = '" + employee.getLoginId() + "'");
-         }
+             String encryptedPassword = SimpleSubstitutionCipher.encrypt(loginPassword.getText());
+             try {
+                 // Check if the login ID already exists in the AuthenticationSystem table
+                 ResultSet resultSet = statement.executeQuery("SELECT * FROM AuthenticationSystem WHERE LoginID = '" + loginId.getText() + "'");
+                 
+                 if (resultSet.next()) {
+                     // If the login ID exists, update the password
+                     statement.executeUpdate("UPDATE AuthenticationSystem SET Password = '" + encryptedPassword + "' WHERE LoginID = '" + loginId.getText() + "'");
+                 } else {
+                     // If the login ID doesn't exist, insert a new entry
+                     statement.executeUpdate("INSERT INTO AuthenticationSystem (LoginID, Password) VALUES ('" + loginId.getText() + "', '" + encryptedPassword + "')");
+                 }
+                 
+                 connection.close();
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+         } 
          connection.close();
          
          // Return to home
          onBackButtonClick(event);
-      } catch (SQLException e) {
+     } catch (SQLException e) {
          e.printStackTrace();
-      }
-   }
+     }
+ }
    
    @FXML
    private void onSystemAccessCheckBoxClick(ActionEvent event) {
@@ -165,7 +167,7 @@ public class EditEmployeeController implements Initializable {
             ResultSet resultSet = statement.executeQuery("select Password from AuthenticationSystem where LoginID = '" 
                      + this.employee.getLoginId() + "'");
             resultSet.next();
-            loginPassword.setText(resultSet.getString(1));
+            loginPassword.setText(SimpleSubstitutionCipher.decrypt(resultSet.getString(1)));
             connection.close();
          } catch (SQLException e) {
             e.printStackTrace();
