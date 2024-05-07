@@ -19,6 +19,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -128,8 +129,18 @@ public class RoomPane extends VBox {
          stage.show();
       } catch (IOException e) {
          e.printStackTrace();
+         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+         successAlert.setTitle("Failure");
+         successAlert.setHeaderText(null);
+         successAlert.setContentText("Failed to delete room: " + e.getMessage());
+         successAlert.showAndWait();
       } catch (SQLException e) {
          e.printStackTrace();
+         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+         successAlert.setTitle("Failure");
+         successAlert.setHeaderText(null);
+         successAlert.setContentText("Failed to delete room: " + e.getMessage());
+         successAlert.showAndWait();
       }
    }
 }
