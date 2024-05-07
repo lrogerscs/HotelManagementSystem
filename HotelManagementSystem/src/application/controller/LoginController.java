@@ -75,7 +75,7 @@ public class LoginController implements Initializable {
       try {
          Parent root = FXMLLoader.load(getClass().getResource("/fxml/change_password.fxml"));
          Scene scene = new Scene(root);
-         Stage stage = new Stage();
+         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          stage.setScene(scene);
          stage.show();
       } catch (Exception e) {
