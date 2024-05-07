@@ -35,8 +35,8 @@ public class EmployeePane extends VBox {
    public EmployeePane(Hotel hotel, Employee employee) {
       this.hotel = hotel;
       this.employee = employee;
-      employeeId = new Label("EmployeeID: " + this.employee.getEmployeeId());
-      loginId = new Label("LoginID: " + this.employee.getLoginId());
+      employeeId = new Label("Employee ID: " + this.employee.getEmployeeId());
+      loginId = new Label("Login ID: " + this.employee.getLoginId());
       name = new Label(this.employee.getName());
       title = new Label("Title: " + this.employee.getTitle());
       email = new Label("Email: " + this.employee.getEmail());
