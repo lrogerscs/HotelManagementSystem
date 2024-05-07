@@ -19,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -90,10 +91,21 @@ public class AddEmployeeController implements Initializable {
          			+ "', '" + encryptedPassword + "')");
          connection.close();
          
+         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+         successAlert.setTitle("Success");
+         successAlert.setHeaderText(null);
+         successAlert.setContentText("Employee added successfully!");
+         successAlert.showAndWait();
+         
          // Return to home
          onBackButtonClick(event);
       } catch (SQLException e) {
          e.printStackTrace();
+         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+         successAlert.setTitle("Failure");
+         successAlert.setHeaderText(null);
+         successAlert.setContentText("Failed to add employee: " + e.getMessage());
+         successAlert.showAndWait();
       }
    }
    

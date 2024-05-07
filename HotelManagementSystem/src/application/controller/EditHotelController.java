@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -74,10 +75,21 @@ public class EditHotelController implements Initializable {
                + " where HotelID = " + hotel.getHotelId());
          connection.close();
          
+         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+         successAlert.setTitle("Success");
+         successAlert.setHeaderText(null);
+         successAlert.setContentText("Hotel edited successfully");
+         successAlert.showAndWait();
+         
          // Return to home
          onBackButtonClick(event);
       } catch (Exception e) {
          e.printStackTrace();
+         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+         successAlert.setTitle("Failure");
+         successAlert.setHeaderText(null);
+         successAlert.setContentText("Failed to edit hotel: " + e.getMessage());
+         successAlert.showAndWait();
       }
    }
    

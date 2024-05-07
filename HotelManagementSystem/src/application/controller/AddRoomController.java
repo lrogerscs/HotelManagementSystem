@@ -19,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -52,10 +53,21 @@ public class AddRoomController implements Initializable {
                   + ", null)");
          connection.close();
          
+         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+         successAlert.setTitle("Success");
+         successAlert.setHeaderText(null);
+         successAlert.setContentText("Room added successfully!");
+         successAlert.showAndWait();
+         
          // Return to hotel
          onBackButtonClick(event);
       } catch (SQLException e) {
          e.printStackTrace();
+         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+         successAlert.setTitle("Failure");
+         successAlert.setHeaderText(null);
+         successAlert.setContentText("Failed to add room: " + e.getMessage());
+         successAlert.showAndWait();
       }
    }
    
