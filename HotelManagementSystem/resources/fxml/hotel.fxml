@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" styleClass="base-pane" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.HotelController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" styleClass="base-pane" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.HotelController">
    <children>
       <ScrollPane fitToWidth="true" prefHeight="900.0" prefWidth="1600.0">
          <content>
@@ -21,7 +21,6 @@
                               <Label fx:id="hotelName" />
                            </children>
                         </HBox>
-                        <Button mnemonicParsing="false" onAction="#onBackButtonClick" text="Back" />
                      </children>
                   </VBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" styleClass="text-pane">
@@ -49,7 +48,10 @@
                      </children>
                   </HBox>
                   <FlowPane fx:id="employeePanelPane" prefHeight="307.0" prefWidth="1600.0" styleClass="display-pane" />
-                  <VBox prefHeight="50.0" prefWidth="1600.0" styleClass="bottom-pane" />
+                  <VBox prefHeight="50.0" prefWidth="1600.0" styleClass="bottom-pane">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#onBackButtonClick" text="Back" />
+                     </children></VBox>
                </children>
             </VBox>
          </content>

@@ -64,7 +64,6 @@
          <children>
             <Button mnemonicParsing="false" onAction="#onSaveButtonClick" styleClass="save-button" text="Save" />
             <Button mnemonicParsing="false" onAction="#onBackButtonClick" text="Back" />
-         </children>
-      </HBox>
+         </children></HBox>
    </children>
 </VBox>

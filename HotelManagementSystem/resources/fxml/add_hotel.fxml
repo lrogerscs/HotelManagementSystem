@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="base-pane" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.AddHotelController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="base-pane" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.AddHotelController">
    <children>
       <VBox prefHeight="150.0" prefWidth="100.0" styleClass="top-pane">
          <children>
@@ -18,8 +18,6 @@
       <VBox prefHeight="200.0" prefWidth="100.0" styleClass="text-pane">
          <children>
             <Label text="Add Hotel" />
-            <Button mnemonicParsing="false" onAction="#onSaveButtonClick" styleClass="save-button" text="Save" />
-            <Button mnemonicParsing="false" onAction="#onBackButtonClick" text="Back" />
          </children>
       </VBox>
       <VBox prefHeight="954.0" prefWidth="1600.0" styleClass="display-pane">
@@ -62,6 +60,10 @@
             </HBox>
          </children>
       </VBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" styleClass="bottom-pane" />
+      <HBox prefHeight="100.0" prefWidth="200.0" styleClass="bottom-pane">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onSaveButtonClick" styleClass="save-button" text="Save" />
+            <Button mnemonicParsing="false" onAction="#onBackButtonClick" text="Back" />
+         </children></HBox>
    </children>
 </VBox>

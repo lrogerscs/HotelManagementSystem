@@ -51,8 +51,7 @@
                   <VBox prefHeight="50.0" prefWidth="1600.0" styleClass="bottom-pane">
                      <children>
                         <Button mnemonicParsing="false" onAction="#onBackButtonClick" text="Back" />
-                     </children>
-                  </VBox>
+                     </children></VBox>
                </children>
             </VBox>
          </content>
